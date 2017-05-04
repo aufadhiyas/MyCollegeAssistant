@@ -1,0 +1,204 @@
+<resources>
+    <string name="app_name">MyCollege Assistant</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="titleEditJK">Edit Jadwal Kuliah</string>
+    <string name="titleTambahJK">Tambah Jadwal Kuliah</string>
+
+
+    <string-array name="hari">
+        <item>Pilih Hari</item>
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Kamis</item>
+        <item>Jumat</item>
+        <item>Sabtu</item>
+        <item>Minggu</item>
+    </string-array>
+    <string-array name="JenisUjian">
+        <item>PRETEST</item>
+        <item>PASTEST</item>
+        <item>UTS</item>
+        <item>UAS</item>
+    </string-array>
+
+    <string name="DB_NAME">AsistenKuliahku</string>
+    <string name="DB_VERSION">1</string>
+
+    <!--Daftar Nama Tabel-->
+    <string name="TB_User">user</string>
+    <string name="TB_JK">jadwalkuliah</string>
+    <string name="TB_JL">jadwallain</string>
+    <string name="TB_C">catatan</string>
+    <string name="TB_T">tugas</string>
+    <string name="TB_Setting">setting</string>
+
+
+    <!--Kolom Tabel User-->
+    <string name="KEY_uNo">no</string>
+    <string name="KEY_uUID">uid</string>
+    <string name="KEY_uNama">nama</string>
+    <string name="KEY_uEmail">email</string>
+    <string name="KEY_uPassword">password</string>
+    <string name="KEY_uUniv">universitas</string>
+    <string name="KEY_uJurusan">jurusan</string>
+    <string name="KEY_uKelas">kelas</string>
+    <string name="KEY_uTglLhr">tgllahir</string>
+    <string name="KEY_uKodeVer">kodeverifikasi</string>
+    <string name="KEY_uLokasi">lokasi</string>
+    <string name="KEY_uTglDibuat">tgldibuat</string>
+    <string name="KEY_uTrkhrUpdate">terakhir_update</string>
+    <string name="KEY_uTrkhrDataUpdate">terakhir_data_update</string>
+    <string name="KEY_uNoOnline">noonline_u</string>
+
+    <!--Kolom Tabel JK-->
+    <string name="KEY_jkNo">no_jk</string>
+    <string name="KEY_jkHari">hari_jk</string>
+    <string name="KEY_jkWaktu">waktu_jk</string>
+    <string name="KEY_jkRuangan">ruangan_jk</string>
+    <string name="KEY_jkMakul">makul_jk</string>
+    <string name="KEY_jkDosen">dosen_jk</string>
+    <string name="KEY_jkKelas">kelas_jk</string>
+    <string name="KEY_jkTerakhirUpdate">updateTime_jk</string>
+    <string name="KEY_jkOnlineNo">noonline_jk</string>
+
+    <!--Kolom Tabel JL-->
+    <string name="KEY_jlNo">no_jl</string>
+    <string name="KEY_jlNama">nama_jl</string>
+    <string name="KEY_jlWaktuS">waktus_jl</string>
+    <string name="KEY_jlWaktuF">waktuf_jl</string>
+    <string name="KEY_jlTempat">tempat_jl</string>
+    <string name="KEY_jlDeskrip">deskripsi_jl</string>
+    <string name="KEY_jlAkumulasi">akumulasi_jl</string>
+    <string name="KEY_jlTerakhirUpdate">updateTime_jl</string>
+    <string name="KEY_jlOnlineNo">noonline_jl</string>
+
+    <!--Kolom Tabel Tugas-->
+    <string name="KEY_tNo">no_t</string>
+    <string name="KEY_tNoJK">no_jk</string>
+    <string name="KEY_tNama">waktu_t</string>
+    <string name="KEY_tDeskripsi">deskripsi_t</string>
+    <string name="KEY_tAttLink">attlink_t</string>
+    <string name="KEY_tWaktu">waktu_t</string>
+    <string name="KEY_tDosen">dosen_t</string>
+    <string name="KEY_tStatus">status_t</string>
+    <string name="KEY_ttrkhrupdate">updateTime_t</string>
+    <string name="KEY_tOnlineNo">noonline_t</string>
+
+    <!--Kolom Tabel Catatan-->
+    <string name="KEY_cNo">no_c</string>
+    <string name="KEY_cNama">nama_c</string>
+    <string name="KEY_cDeskrip">deskripsi_c</string>
+    <string name="KEY_cWaktuF">waktu_c</string>
+    <string name="KEY_cAttLink">attlink_c</string>
+    <string name="KEY_cWaktu">waktu_c</string>
+    <string name="KEY_cTerakhirUpdate">updateTime_c</string>
+    <string name="KEY_cOnlineNo">noonline_c</string>
+
+    <!--Kolom Tabel LOG-->
+    <string name="KEY_LOGNO">no_log</string>
+    <string name="KEY_LOGNAMA">nama_log</string>
+    <string name="KEY_LOGWAKTU">waktu_log</string>
+    <string name="KEY_LOGNOLOCAL">no_local</string>
+    <string name="KEY_LOGNOONLINE">no_online</string>
+
+    <!--Kolom Tabel Setting-->
+    <string name="KEY_stCuaca">statuscuaca</string>
+    <string name="KEY_stLoc">location</string>
+    <string name="KEY_stTimer">statustimer</string>
+    <string name="KEY_stDurat">statusDuration</string>
+    <string name="KEY_stAutoSink">autoSink</string>
+
+    <!--Kolom Tabel Session-->
+    <string name="KEY_sLogin">stat_login</string>
+    <string name="KEY_sDateLogin">terakhir_login</string>
+    <string name="KEY_sVerif">stat_verifikasi</string>
+    <string name="KEY_sSinkron">terakhir_sinkron</string>
+    <string name="title_activity_menu_jadwal_kuliah">MenuJadwalKuliah</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_menu_jadwal_kuliah_tab">Jadwal Kuliah</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">Pengaturan</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+
+</resources>

@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hari"
+            android:textSize="20sp"
+            android:layout_gravity="top|left|start"
+            android:id="@+id/rowhariJK"
+            android:visibility="gone"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            android:minWidth="50dp"
+            android:id="@+id/gariskiri"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/rowJamjk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="19:00"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rowJamjk"
+                android:textSize="16sp"
+                android:text="18:00"
+                android:id="@+id/rowJamjk2"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layoutpartnerjk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/gariskiri"
+            android:layout_below="@+id/rowhariJK"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/menuOptionJK"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_more_gray_24px" />
+
+            <TextView
+                android:id="@+id/rowMakul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/menuOptionJK"
+                android:layout_gravity="left"
+                android:text="Makul"
+                android:maxLines="1"
+                android:scaleType="centerCrop"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rowMakul"
+                android:maxLines="1"
+                android:text="Dosen"
+                android:id="@+id/rowDosen"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rowDosen"
+                android:layout_alignParentRight="true"
+                android:text="Ada Tugas"
+                android:id="@+id/rowstatusTugasJK"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iconTugasRowJK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rowDosen"
+                android:layout_marginLeft="5dp"
+                android:layout_toLeftOf="@id/rowstatusTugasJK"
+                app:srcCompat="@drawable/ic_check_green_16px" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rowDosen"
+                android:scaleType="centerCrop"
+                android:gravity="left"
+                android:layout_toLeftOf="@id/iconTugasRowJK"
+
+                android:maxLines="1"
+                android:text="Ruangan"
+                android:id="@+id/rowRuanganjk"/>
+
+            </RelativeLayout>
+
+
+
+
+    </RelativeLayout>

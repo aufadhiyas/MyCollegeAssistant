@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:id="@+id/cardviewJL"
+    android:layout_marginTop="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_date_range_black_18px"
+            android:id="@+id/ic_jl_daterange"/>
+
+        <ImageButton
+            android:id="@+id/btnOptionJL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            app:srcCompat="@drawable/ic_more_gray_24px" />
+        <me.citrafa.asistenkuliahku.CustomWidget.TVLatoFontRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ic_jl_daterange"
+            android:text="Tanggal"
+            android:textSize="18sp"
+            android:id="@+id/lbl_jl_tanggal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/ic_jl_daterange"
+            android:textSize="16sp"
+            android:layout_below="@id/lbl_jl_tanggal"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Nama Jadwal"
+            android:id="@+id/lbl_jl_nama"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ic_jl_daterange"
+            android:layout_below="@id/lbl_jl_nama"
+            android:text="Lokasi"
+            android:id="@+id/lbl_jl_lokasi"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ic_jl_daterange"
+            android:layout_below="@id/lbl_jl_lokasi"
+            android:maxLines="2"
+            android:text="Deskripsi"
+            android:id="@+id/lbl_jl_deskripsi"/>
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

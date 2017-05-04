@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_frmJadwalLain">
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            app:srcCompat="@drawable/ic_date_range_black_36px"
+            android:id="@+id/ic_jl_dateranges"/>
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/ic_jl_dateranges"
+            android:id="@+id/txt1jl">
+
+            <EditText
+                android:id="@+id/txtNamaJl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama" />
+        </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt1jl"
+        android:orientation="vertical">
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt2jl"
+            android:layout_below="@id/txt1jl"
+            android:layout_marginLeft="20dp">
+
+            <EditText
+                android:id="@+id/txtWaktuJlS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtNamaJl"
+                android:fontFamily="a"
+                android:hint="Waktu Mulai" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt3jl"
+            android:layout_below="@id/txt2jl"
+            android:layout_marginLeft="20dp">
+
+            <EditText
+                android:id="@+id/txtWaktuJlF"
+                android:layout_below="@id/txtNamaJl"
+                android:fontFamily="a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Waktu Selesai" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt4jl"
+            android:layout_below="@id/txt3jl"
+            android:layout_marginLeft="20dp">
+
+            <EditText
+                android:id="@+id/txtTempatJl"
+                android:fontFamily="a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tempat Aktivitas" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt5jl"
+            android:layout_below="@id/txt4jl"
+            android:layout_marginLeft="20dp">
+
+            <EditText
+                android:id="@+id/txtDeskripsiJl"
+                android:fontFamily="a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Deskripsi Aktivitas" />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Simpan"
+            android:id="@+id/btnSimpanJl"
+            android:layout_gravity="end"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,70 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="me.citrafa.asistenkuliahku">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:name=".SessionManager.AppController"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ActivityClass.frmLogin"
+            android:label="Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ActivityClass.frmDaftar"
+            android:label="Daftar Akun" />
+        <activity
+            android:name=".ActivityClass.menuJadwalKuliah"
+            android:label="Menu Jadwal Kuliah" />
+        <activity
+            android:name=".ActivityClass.menuJadwalUjian"
+            android:label="Jadwal Ujianku" />
+        <activity
+            android:name=".ActivityClass.menuJadwalLain"
+            android:label="Jadwal Lainku" />
+        <activity
+            android:name=".ActivityClass.menuCatatan"
+            android:label="Catatanku" />
+        <activity
+            android:name=".ActivityClass.Dashboard"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ActivityClass.frmJadwalKuliah"
+            android:label="Jadwal Kuliahku" />
+        <activity
+            android:name=".ActivityClass.frmTugas"
+            android:label="Tugas Kuliahku"/>
+        <activity
+            android:name=".ActivityClass.menuJadwalKuliahTab"
+            android:label="Kuliah Ku" />
+        <service android:name=".Service.BoundService"/>
+
+        <receiver android:name=".Service.MyBroadcastReceiver" />
+        <activity android:name=".ActivityClass.MenuPersonalInfo" />
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="false"/>
+
+    </application>
+
+</manifest>

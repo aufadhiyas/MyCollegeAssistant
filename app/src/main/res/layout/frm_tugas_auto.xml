@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPilihMatakuliah"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            android:text="Pilih Mata Kuliah"/>
+
+        <me.citrafa.asistenkuliahku.CustomWidget.TVLatoFontMedium
+            android:layout_width="match_parent"
+            android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:text="Nama Mata Kuliah"
+            android:id="@+id/lblMakulTugas"/>
+        <me.citrafa.asistenkuliahku.CustomWidget.TVLatoFontRegular
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="Waktu"
+            android:id="@+id/lblWaktuMakulTugas"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="3"
+            android:maxLines="3"
+            android:hint="Deskripsi Tugas"
+            android:id="@+id/txtDeskripsiTugas"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="File"
+                android:id="@+id/btnBrowseFileTugas"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:id="@+id/lblFileTugas"
+                android:text="Nama File"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Switch
+                android:id="@+id/switchWaktuKumpulTugas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="0" />
+            <me.citrafa.asistenkuliahku.CustomWidget.TVLatoFontRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="14dp"
+                android:id="@+id/lblSwitchTugas"/>
+        </LinearLayout>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtWaktuKumpulTugas"
+            android:hint="Waktu Pengumpulan"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="Simpan"
+            android:id="@+id/btnSimpanTugas"/>
+
+
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
