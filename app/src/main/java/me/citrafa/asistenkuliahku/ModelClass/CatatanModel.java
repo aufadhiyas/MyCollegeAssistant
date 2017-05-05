@@ -15,7 +15,7 @@ public class CatatanModel extends RealmObject {
     private int no_c;
     private String nama_c;
     private String deskripsi_c;
-    private Date waktu_c;
+    private String waktu_c;
     private String attlink_c;
     private String noonline_c;
     private String Author;
@@ -26,7 +26,7 @@ public class CatatanModel extends RealmObject {
     public CatatanModel() {
     }
 
-    public CatatanModel(int no_c, String nama_c, String deskripsi_c, Date waktu_c, String attlink_c, String noonline_c, String author, Date created_at, Date updated_at) {
+    public CatatanModel(int no_c, String nama_c, String deskripsi_c, String waktu_c, String attlink_c, String noonline_c, String author, Date created_at, Date updated_at) {
         this.no_c = no_c;
         this.nama_c = nama_c;
         this.deskripsi_c = deskripsi_c;
@@ -62,11 +62,11 @@ public class CatatanModel extends RealmObject {
         this.deskripsi_c = deskripsi_c;
     }
 
-    public Date getWaktu_c() {
+    public String getWaktu_c() {
         return waktu_c;
     }
 
-    public void setWaktu_c(Date waktu_c) {
+    public void setWaktu_c(String waktu_c) {
         this.waktu_c = waktu_c;
     }
 

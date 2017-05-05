@@ -84,6 +84,12 @@ public class frmTugas extends AppCompatActivity {
         final String waktu = jam.format(jadwalKuliahModel.getWaktu_jk());
         lbl1.setText("" + nama);
         lbl2.setText("Jam : " + waktu);
+        lbl2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LDS.DateTimePickerSingle(mContext,txt2);
+            }
+        });
         defaultDate = jadwalKuliahModel.getHari_jk()+" - "+waktu;
         switchTugasAction(switchWaktuKumpulTugas,lblSwitch,txt2,defaultDate);
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +99,6 @@ public class frmTugas extends AppCompatActivity {
                     btn2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            LDS.DateTimePickerSingle(mContext,txt2);
                             saveDataFromJKToDate(1,LDS.getFINALDATE());
                         }
                     });
@@ -144,7 +149,7 @@ public class frmTugas extends AppCompatActivity {
         });
     }
     public void saveDataFromJK(int status){
-        int no = id(1000);
+        int no = id(10000);
         String Deskripsi = txt1.getText().toString();
         String attLink = lbl3.getText().toString();
         Date dateTugas= null;
@@ -160,7 +165,7 @@ public class frmTugas extends AppCompatActivity {
         realm.commitTransaction();
     }
     public void saveDataFromJKToDate(int status,Date date){
-        int no = id(1000);
+        int no = id(10000);
         String Deskripsi = txt1.getText().toString();
         String attLink = lbl3.getText().toString();
         Date dateTugas=date;

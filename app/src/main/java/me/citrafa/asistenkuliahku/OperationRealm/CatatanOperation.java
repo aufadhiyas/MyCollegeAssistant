@@ -6,6 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
+import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 
 /**
  * Created by SENSODYNE on 22/04/2017.
@@ -56,5 +57,27 @@ public class CatatanOperation {
         lastID = number.intValue();
         return lastID;
 
+    }
+    public void deleteItemAsync(final Realm realm, final int id) {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+                                          @Override
+                                          public void execute(Realm realm) {
+                                              CatatanModel jk = realm.where(CatatanModel.class).equalTo("no_c", id).findFirst();
+                                              if (jk !=null){
+                                                  jk.deleteFromRealm();
+                                              }
+                                          }
+                                      }, new Realm.Transaction.OnSuccess() {
+                                          public void onSuccess() {
+                                              Log.d(TAG, "Berhasil Hapus Data Di Realm ID : " + id);
+                                              Log.d(TAG, "Path : " + realm.getPath());
+                                          }
+                                      }, new Realm.Transaction.OnError() {
+                                          @Override
+                                          public void onError(Throwable error) {
+                                              Log.d(TAG, "gagal " + error);
+                                          }
+                                      }
+        );
     }
 }

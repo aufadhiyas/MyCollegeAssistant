@@ -110,7 +110,7 @@ public class frmJadwalKuliah extends AppCompatActivity {
                                                 public void onTimeSet(TimePicker view, int hourOfDay1,
                                                                       int minute1) {
                                                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                                    String formatedDate = sdf.format(new Date(year0,month0,day0,hourOfDay1+1,minute1));
+                                                    String formatedDate = sdf.format(new Date(year0,month0,day0,hourOfDay1,minute1));
                                                     try {
                                                         Date date1 = sdf.parse(formatedDate);
                                                         SimpleDateFormat sdp = new SimpleDateFormat("HH:mm");
@@ -119,7 +119,6 @@ public class frmJadwalKuliah extends AppCompatActivity {
                                                         String prints = sdp.format(date);
                                                         String printf = sdp.format(date1);
                                                         Jam.setText(prints+" - "+printf);
-                                                        Toast.makeText(frmJadwalKuliah.this, ""+valueOf(date), Toast.LENGTH_SHORT).show();
 
 
                                                     } catch (ParseException e) {

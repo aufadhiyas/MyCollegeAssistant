@@ -2,57 +2,36 @@ package me.citrafa.asistenkuliahku.ActivityClass.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.support.v4.app.Fragment;
-import android.app.TimePickerDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 
 import io.realm.Realm;
-import me.citrafa.asistenkuliahku.ActivityClass.frmDaftar;
 import me.citrafa.asistenkuliahku.CustomWidget.LibraryDateCustom;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
-import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 import me.citrafa.asistenkuliahku.OperationRealm.CatatanOperation;
 import me.citrafa.asistenkuliahku.R;
 
@@ -71,7 +50,7 @@ public class fragment_frm_catatan extends Fragment {
     Realm realm;
     TextView lblFile;
     CatatanOperation co;
-    Date Dates;
+    String Dates;
     File source, destination;
     ContentResolver contentResolver;
     int PICKFILE_RESULT_CODE;
@@ -121,10 +100,11 @@ public class fragment_frm_catatan extends Fragment {
                 LDC.DateTimePickerSingle(getActivity(), txtWaktu);
             }
         });
+
         btnSimpan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SimpanData();
             }
         });
 
@@ -136,14 +116,15 @@ public class fragment_frm_catatan extends Fragment {
     public void SimpanData() {
         int ids = id(10000);
         String nama = txtNamaCatatan.getText().toString().trim();
-        Date waktuS = Dates;
-        String paths = filePaths;
+        String waktuS = Dates;
+        String paths = lblFile.getText().toString();
+        String tanggal = txtWaktu.getText().toString();
         String deskripsi = txtDeskripsi.getText().toString();
         Date created_at=getCurrentTimeStamp();
         Date updated_at=getCurrentTimeStamp();
         String Author="User";
         String noOnline="test";
-        cm = new CatatanModel(ids,nama,deskripsi,waktuS,paths,noOnline,Author,created_at,updated_at);
+        cm = new CatatanModel(ids,nama,deskripsi,tanggal,paths,noOnline,Author,created_at,updated_at);
         co.tambahCatatan(cm);
     }
     public  boolean isStoragePermissionGranted() {

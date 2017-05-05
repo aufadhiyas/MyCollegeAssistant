@@ -89,6 +89,9 @@ public class Dashboard extends AppCompatActivity
         String Long = Double.toString(gps.getLongitude());
         setSupportActionBar(toolbar);
         session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()){
+            logoutUser();
+        }
         Log.d(TAG, "TAG : onCreate");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.hide();
@@ -120,6 +123,7 @@ public class Dashboard extends AppCompatActivity
 
             }
         });
+        getCountDown(lblTime,lblnamaKegiatan);
 
     }
 
@@ -236,4 +240,66 @@ public class Dashboard extends AppCompatActivity
             mServiceBound = true;
         }
     };
+    private void getCountDown(final TextView txt1, final TextView txt2){
+        realm = Realm.getDefaultInstance();
+        int noHari = 5;
+        final int year0 = 2011;
+        final int month0 = 1;
+        final int day0 = 1;
+        Calendar c = Calendar.getInstance();
+        int jam = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+        long jadis = 10000;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formatedDate = sdf.format(new Date(year0,month0,day0,jam,minutes));
+        try {
+            Date dateMowForJK = sdf.parse(formatedDate);
+            final JadwalKuliahModel jkm = realm.where(JadwalKuliahModel.class).equalTo("nohari",noHari).greaterThan("waktu_jk",dateMowForJK).findFirst();
+            Log.d(TAG,"waktu : CEK ");
+            if (jkm != null) {
+                SimpleDateFormat formatjam = new SimpleDateFormat("HH:mm:ss:SSS");
+                Date now = new Date();
+                String Nows = formatjam.format(now);
+                final String JK = formatjam.format(jkm.getWaktu_jk());
+                final long jadi = (formatjam.parse(JK).getTime() - formatjam.parse(Nows).getTime());
+                long duration=jadi; //6 hours
+                new CountDownTimer(duration, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        long secondsInMilli = 1000;
+                        long minutesInMilli = secondsInMilli * 60;
+                        long hoursInMilli = minutesInMilli * 60;
+
+                        long elapsedHours = millisUntilFinished / hoursInMilli;
+                        millisUntilFinished = millisUntilFinished % hoursInMilli;
+
+                        long elapsedMinutes = millisUntilFinished / minutesInMilli;
+                        millisUntilFinished = millisUntilFinished % minutesInMilli;
+
+                        long elapsedSeconds = millisUntilFinished / secondsInMilli;
+
+                        String yy = String.format("%02d:%02d:%02d", elapsedHours, elapsedMinutes,elapsedSeconds);
+                        txt1.setText(yy);
+                        txt2.setText(jkm.getMakul_jk());
+                    }
+
+                    public void onFinish() {
+
+                        txt1.setText("00:00:00");
+                        txt2.setText(jkm.getMakul_jk());
+
+                    }
+                }.start();
+
+
+            }else{
+                txt1.setText("Tidak ada jadwal lagi hari ini");
+                txt2.setText("Selamat Beristirahat :D");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d(TAG,"waktu : error");
+        }
+
+    }
 }

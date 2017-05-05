@@ -20,7 +20,7 @@ public class TugasOperation {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(obj);
+                realm.copyToRealm(obj);
             }
         }, new Realm.Transaction.OnSuccess() {
             public void onSuccess() {

@@ -4,18 +4,37 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_frm_catatan;
+import me.citrafa.asistenkuliahku.AdapterRecycleView.AdapterCatatanRV;
+import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
 import me.citrafa.asistenkuliahku.R;
 
 public class menuCatatan extends AppCompatActivity {
     private FloatingActionButton fab;
+    private Realm realm;
+    private RecyclerView recyclerView;
+    RealmResults<CatatanModel> data;
+    AdapterCatatanRV adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_catatan);
+        realm = Realm.getDefaultInstance();
+        data = realm.where(CatatanModel.class).findAll();
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerC);
+        adapter = new AdapterCatatanRV(realm.where(CatatanModel.class).findAll(),data);
+        final LinearLayoutManager layout = new LinearLayoutManager(this);
+        layout.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layout);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
         fab = (FloatingActionButton)findViewById(R.id.fabAddCatatan);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

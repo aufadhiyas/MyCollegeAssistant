@@ -30,6 +30,7 @@ import me.citrafa.asistenkuliahku.R;
 import me.citrafa.asistenkuliahku.SessionManager.AppController;
 import me.citrafa.asistenkuliahku.SessionManager.SessionManager;
 import me.citrafa.asistenkuliahku.Webservice.Webservice_Controller;
+import me.citrafa.asistenkuliahku.frmVerifikasi;
 
 public class frmDaftar extends AppCompatActivity {
     Button btnDaftar, btnKembali;
@@ -130,12 +131,20 @@ public class frmDaftar extends AppCompatActivity {
 
                         String name = jObj.getString("name");
                         String email = jObj.getString("email");
-                        String created_at = jObj.getString("created_at");
+                        String status = jObj.getString("status_verifikasi");
+
+                            Intent intent = new Intent(frmDaftar.this,frmVerifikasi.class);
+                            intent.putExtra("status",status);
+                            intent.putExtra("email",email);
+                            intent.putExtra("nama",name);
+                            startActivity(intent);
+                            finish();
+
 
                         // Inserting row in users table
                         //db.addUser(name, email, uid, created_at);
 
-                        Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+
 
                         // Launch login activity
                     } else {
@@ -148,6 +157,7 @@ public class frmDaftar extends AppCompatActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(frmDaftar.this, ""+e, Toast.LENGTH_SHORT).show();
                 }
 
             }

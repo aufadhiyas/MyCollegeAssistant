@@ -103,18 +103,18 @@ public class frmLogin extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(frmLogin.this,
-                        Dashboard.class);
-                startActivity(intent);
-//                String email = txtEmail.getText().toString().trim();
-//                String pass = txtPassword.getText().toString().trim();
-//                Boolean status= true;
-//                if(!email.isEmpty() && !pass.isEmpty()){
-//
-//                    checkLogin(email,pass,status);
-//                }else{
-//                    Toast.makeText(getApplicationContext(), "Masukkan Email Dan Password Anda", Toast.LENGTH_LONG).show();
-//                }
+//                Intent intent = new Intent(frmLogin.this,
+//                        Dashboard.class);
+//                startActivity(intent);
+                String email = txtEmail.getText().toString().trim();
+                String pass = txtPassword.getText().toString().trim();
+                Boolean status= true;
+                if(!email.isEmpty() && !pass.isEmpty()){
+
+                    checkLogin(email,pass,status);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Masukkan Email Dan Password Anda", Toast.LENGTH_LONG).show();
+                }
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -151,17 +151,18 @@ public class frmLogin extends AppCompatActivity {
                 try {
                     JSONObject jObjs = new JSONObject(response);
                     boolean error = jObjs.getBoolean("error");
-                    int status_verifikasi = jObjs.getInt("status_verifikasi");
+                    String status_verifikasi = jObjs.getString("status_verifikasi");
                     String email = jObjs.getString("email");
                     // Check for error node in json
                     if (!error) {
                         // user successfully logged in
                         // Create login session
-                        if (status_verifikasi == 0){
+                        if (status_verifikasi.equals("0")){
                             session.setVerifyStat(false);
                             Intent intent = new Intent(frmLogin.this, frmVerifikasi.class);
                             String Email = null;
-                            intent.putExtra(email, Email);
+                            intent.putExtra("email",email);
+                            startActivity(intent);
 
                         }else{
                             session.setLogin(true);

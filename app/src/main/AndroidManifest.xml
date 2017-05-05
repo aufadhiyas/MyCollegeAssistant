@@ -55,6 +55,7 @@
         <activity
             android:name=".ActivityClass.menuJadwalKuliahTab"
             android:label="Kuliah Ku" />
+        <activity android:name=".frmVerifikasi"/>
         <service android:name=".Service.BoundService"/>
 
         <receiver android:name=".Service.MyBroadcastReceiver" />
