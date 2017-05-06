@@ -1,8 +1,10 @@
 package me.citrafa.asistenkuliahku.AdapterRecycleView;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +32,9 @@ import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import io.realm.RealmViewHolder;
 import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_frmJadwalLain;
+import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_frm_catatan;
 import me.citrafa.asistenkuliahku.ActivityClass.InterfaceFragment.FragmentCommunication;
+import me.citrafa.asistenkuliahku.ActivityClass.menuJadwalLain;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 import me.citrafa.asistenkuliahku.R;
 
@@ -43,13 +47,16 @@ public class AdapterJadwalLainRV extends RealmRecyclerViewAdapter<JadwalLainMode
     private Context mContext;
     Realm realm;
     private RealmResults<JadwalLainModel> jlm;
-
+    menuJadwalLain mjl;
+    FragmentManager manager;
 
     public AdapterJadwalLainRV(OrderedRealmCollection<JadwalLainModel> data, RealmResults<JadwalLainModel> jlm) {
         super(data, true);
         this.jlm = jlm;
         setHasStableIds(true);
         realm = Realm.getDefaultInstance();
+        mjl = new menuJadwalLain();
+
     }
 
 
@@ -141,7 +148,13 @@ public class AdapterJadwalLainRV extends RealmRecyclerViewAdapter<JadwalLainMode
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.MenuJLUbah:
-                    //KIRIM NO KE FRAGMENT fragment_frmJadwalLAin
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("noJL",no);
+//                    fragment_frmJadwalLain fragment_frmJadwalLain = new fragment_frmJadwalLain();
+//                    fragment_frmJadwalLain.setArguments(bundle);
+//                    FragmentManager fm = mjl.getFragmentManager();
+//                    FragmentTransaction ft = fm.beginTransaction();
+//                    ft.replace(R.id.activity_menu_jadwal_lain, new fragment_frmJadwalLain()).addToBackStack(null).commit();
                     return true;
                 case R.id.MenuJLHapus:
                     Toast.makeText(mContext, "clicked Hapus = " +no, Toast.LENGTH_SHORT).show();

@@ -37,15 +37,9 @@ public class AdapterTugasRV extends RealmRecyclerViewAdapter<TugasModel, Adapter
     public AdapterTugasRV(@Nullable OrderedRealmCollection<TugasModel> data
             , RealmResults<TugasModel> tugasModels) {
 
-        super(tugasModels, true);
-        this.data = data;
+        super(data, true);
         this.tugasModels = tugasModels;
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return tugasModels.size();
     }
 
     @Override
@@ -61,12 +55,13 @@ public class AdapterTugasRV extends RealmRecyclerViewAdapter<TugasModel, Adapter
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         TugasModel tm = tugasModels.get(position);
-        realm = Realm.getDefaultInstance();
-        JadwalKuliahModel jk = realm.where(JadwalKuliahModel.class).equalTo("Tugas.no_t",tm.getNo_t()).findFirst();
-        holder.txt1.setText(jk.getMakul_jk());
+//        realm = Realm.getDefaultInstance();
+//        JadwalKuliahModel jk = realm.where(JadwalKuliahModel.class).equalTo("Tugas.no_t",tm.getNo_t()).findFirst();
+//        holder.txt1.setText(jk.getMakul_jk());
         holder.txt2.setText(valueOf(tm.getWaktu_t()));
         holder.txt4.setText(tm.getDeskripsi_t());
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView txt1,txt2,txt3,txt4;

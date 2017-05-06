@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import io.realm.Realm;
 import me.citrafa.asistenkuliahku.CustomWidget.LibraryDateCustom;
@@ -25,6 +26,7 @@ import me.citrafa.asistenkuliahku.OperationRealm.DateStorageOperation;
 import me.citrafa.asistenkuliahku.OperationRealm.JadwalKuliahOperation;
 import me.citrafa.asistenkuliahku.OperationRealm.TugasOperation;
 import me.citrafa.asistenkuliahku.R;
+import me.citrafa.asistenkuliahku.SessionManager.SessionManager;
 
 public class frmTugas extends AppCompatActivity {
     private  static final String TAG = frmDaftar.class.getSimpleName();
@@ -47,28 +49,18 @@ public class frmTugas extends AppCompatActivity {
     private String namaMakul, defaultDate;
     private String hari_makul;
     private String jam_makul;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JadwalKuliahOperation JKO = new JadwalKuliahOperation();
+        session = new SessionManager(getApplicationContext());
         TO = new TugasOperation();
         LDS = new LibraryDateCustom();
         realm = Realm.getDefaultInstance();
         Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0);
-        if (JKO.getNextId() == 1) {
-            //JadwalKuliah Kosong
-            setContentView(R.layout.content_jadwalkulaih_isempty);
-
-        } else {
-            setContentView(R.layout.frm_tugas_auto);
-            TambahTugasFromJKAuto(id);
-        }
-    }
-
-
-    private void TambahTugasFromJKAuto(int no){
+        final int id = intent.getIntExtra("id", 10000);
         txt1 = (EditText) findViewById(R.id.txtDeskripsiTugas);
         txt2 = (EditText) findViewById(R.id.txtWaktuKumpulTugas);
         lbl1 = (me.citrafa.asistenkuliahku.CustomWidget.TVLatoFontMedium) findViewById(R.id.lblMakulTugas);
@@ -78,44 +70,31 @@ public class frmTugas extends AppCompatActivity {
         switchWaktuKumpulTugas = (Switch)findViewById(R.id.switchWaktuKumpulTugas);
         btn1 = (Button) findViewById(R.id.btnBrowseFileTugas);
         btn2 = (Button) findViewById(R.id.btnSimpanTugas);
-        jadwalKuliahModel = realm.where(JadwalKuliahModel.class).equalTo("no_jk", no).findFirst();
-        String nama = jadwalKuliahModel.getMakul_jk();
-        SimpleDateFormat jam = new SimpleDateFormat("HH:mm");
-        final String waktu = jam.format(jadwalKuliahModel.getWaktu_jk());
-        lbl1.setText("" + nama);
-        lbl2.setText("Jam : " + waktu);
+        jadwalKuliahModel = realm.where(JadwalKuliahModel.class).equalTo("no_jk", id).findFirst();
+        if (id !=10000){
+            namaMakul = jadwalKuliahModel.getMakul_jk();
+            hari_makul = jadwalKuliahModel.getHari_jk();
+            SimpleDateFormat jam = new SimpleDateFormat("HH:mm");
+            jam_makul = jam.format(jadwalKuliahModel.getWaktu_jk());
+        }
+
+        lbl1.setText("" + namaMakul);
+        lbl2.setText(hari_makul+" - " + jam_makul);
         lbl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LDS.DateTimePickerSingle(mContext,txt2);
             }
         });
-        defaultDate = jadwalKuliahModel.getHari_jk()+" - "+waktu;
+        defaultDate = jadwalKuliahModel.getHari_jk()+" - "+jam_makul;
         switchTugasAction(switchWaktuKumpulTugas,lblSwitch,txt2,defaultDate);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (switchStatus==1){
-                    btn2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            saveDataFromJKToDate(1,LDS.getFINALDATE());
-                        }
-                    });
-
-                }else{
-                    saveDataFromJK(1);
-
-                }
+                insert(id);
             }
         });
-
     }
-
-
-
-
-
 
 
 
@@ -148,40 +127,23 @@ public class frmTugas extends AppCompatActivity {
             }
         });
     }
-    public void saveDataFromJK(int status){
-        int no = id(10000);
+    public void insert(int status){
+        int no = id(status);
         String Deskripsi = txt1.getText().toString();
         String attLink = lbl3.getText().toString();
         Date dateTugas= null;
-        int statusT = status;
+        String uid = uuid();
+        Boolean statusT = true;
         Date created_at = getCurrentTimeStamp();
         Date updated_at = getCurrentTimeStamp();
-        String author = "User";
+        String author = session.getEmaiUser();
         String noonline="hh";
-        tugasModel =new TugasModel(no,Deskripsi,attLink,dateTugas,statusT,created_at,updated_at,author,noonline);
-        realm.beginTransaction();
-        jadwalKuliahModel.Tugas.add(tugasModel);
+        tugasModel =new TugasModel(no,uid,Deskripsi,attLink,dateTugas,statusT,author,created_at,updated_at);
+        jadwalKuliahModel.Tugas.add(status,tugasModel);
         TO.TambahData(tugasModel);
-        realm.commitTransaction();
     }
-    public void saveDataFromJKToDate(int status,Date date){
-        int no = id(10000);
-        String Deskripsi = txt1.getText().toString();
-        String attLink = lbl3.getText().toString();
-        Date dateTugas=date;
-        Date dateTugas2= date;
-        int statusT = status;
-        Date created_at = getCurrentTimeStamp();
-        Date updated_at = getCurrentTimeStamp();
-        String author = "User";
-        String noonline="hh";
-        tugasModel =new TugasModel(no,Deskripsi,attLink,dateTugas,statusT,created_at,updated_at,author,noonline);
-        TO.TambahData(tugasModel);
-        realm.beginTransaction();
-        jadwalKuliahModel.Tugas.add(tugasModel);
-        dso = new DateStorageModel(DSO.getNextId(),no,"TugasModel",dateTugas,dateTugas2);
-        DSO.insertDatetoStorage(dso);
-        realm.commitTransaction();
+    public void update(){
+
     }
 
     public int id(int status) {
@@ -203,6 +165,9 @@ public class frmTugas extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+    public String uuid(){
+        return UUID.randomUUID().toString().toString();
     }
 
 

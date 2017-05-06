@@ -12,7 +12,6 @@
     tools:context="me.citrafa.asistenkuliahku.ActivityClass.menuJadwalLain">
 
 <include layout="@layout/content_jadwal_lain"/>
-
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

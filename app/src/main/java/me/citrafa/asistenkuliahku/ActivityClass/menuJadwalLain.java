@@ -54,7 +54,11 @@ public class menuJadwalLain extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.activity_menu_jadwal_lain, new fragment_frmJadwalLain()).addToBackStack(null).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt("noJL",0);
+                fragment_frmJadwalLain frg = new fragment_frmJadwalLain();
+                frg.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.activity_menu_jadwal_lain, frg).addToBackStack(null).commit();
 
                 fab.hide();
             }

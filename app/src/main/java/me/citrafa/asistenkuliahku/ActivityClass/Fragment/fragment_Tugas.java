@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
@@ -95,6 +96,7 @@ public class fragment_Tugas extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AdapterTugasRV(data, jkm);
         recyclerView.setAdapter(adapter);
+        Toast.makeText(getActivity(), ""+jkm.size(), Toast.LENGTH_SHORT).show();
 
         return rootView;
 

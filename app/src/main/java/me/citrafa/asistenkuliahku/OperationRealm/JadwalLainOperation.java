@@ -2,7 +2,12 @@ package me.citrafa.asistenkuliahku.OperationRealm;
 
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.realm.Realm;
+import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 
 /**
@@ -22,6 +27,8 @@ public class JadwalLainOperation {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(obj);
+                DateStorageModel dso =new DateStorageModel(getIdDate(),obj.getNo_jl(),"JadwalLainModel",obj.getWaktus_jl(),obj.getWaktuf_jl());
+                realm.copyToRealm(dso);
             }
         }, new Realm.Transaction.OnSuccess() {
             public void onSuccess() {
@@ -31,6 +38,41 @@ public class JadwalLainOperation {
         });
         realm.beginTransaction();
         realm.commitTransaction();
+    }
+    public void editJadwalLain(final JadwalLainModel obj){
+        realm = Realm.getDefaultInstance();
+        final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("id_model",obj.getNo_jl()).equalTo("modelName","JadwalLainModel").findFirst();
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(obj);
+                if (dso !=null) {
+                    dso.setDateS(obj.getWaktus_jl());
+                    dso.setDateF(obj.getWaktuf_jl());
+                }
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            public void onSuccess() {
+                Log.d(TAG, "Berhasil Menyimpan Data Di Realm");
+                Log.d(TAG, "Path : " + realm.getPath());
+            }
+        });
+        realm.beginTransaction();
+        realm.commitTransaction();
+    }
+    public void delete(final JadwalLainModel obj){
+        realm = Realm.getDefaultInstance();
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("id_model",obj.getNo_jl()).equalTo("modelName","JadwalLainModel").findFirst();
+                obj.setStatus_jl(false);
+                obj.setUpdated_at(getCurrentTimeStamp());
+                dso.deleteFromRealm();
+            }
+        });
     }
     public int getNextId() {
         realm = Realm.getDefaultInstance();
@@ -52,4 +94,27 @@ public class JadwalLainOperation {
         return lastID;
 
     }
+    public static Date getCurrentTimeStamp(){
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        try {
+            return sdfDate.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return now;
+    }
+    public int getIdDate(){
+        realm = Realm.getDefaultInstance();
+        Number number = realm.where(DateStorageModel.class).max("id");
+        int nextid;
+        if (number ==null){
+            nextid = 1;
+        }else{
+            nextid = number.intValue()+1;
+        }
+        return nextid;
+    }
+
 }

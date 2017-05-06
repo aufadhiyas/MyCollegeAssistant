@@ -41,9 +41,8 @@ public class JadwalLainModel extends RealmObject {
         this.updated_at = updated_at;
     }
 
-    public JadwalLainModel(int no_jl, String uid, String nama_jl, Date waktus_jl, Date waktuf_jl, String tempat_jl, String deskripsi_jl, Boolean status_jl, String author, Date updated_at) {
+    public JadwalLainModel(int no_jl, String nama_jl, Date waktus_jl, Date waktuf_jl, String tempat_jl, String deskripsi_jl, Boolean status_jl, String author, Date updated_at) {
         this.no_jl = no_jl;
-        this.uid = uid;
         this.nama_jl = nama_jl;
         this.waktus_jl = waktus_jl;
         this.waktuf_jl = waktuf_jl;

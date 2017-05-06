@@ -1,12 +1,8 @@
 package me.citrafa.asistenkuliahku.ModelClass;
 
-import android.app.Activity;
-
 import java.util.Date;
 
 import io.realm.RealmObject;
-import io.realm.RealmResults;
-import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -16,29 +12,40 @@ import io.realm.annotations.PrimaryKey;
 public class TugasModel extends RealmObject{
     @PrimaryKey
     private int no_t;
+    private String uid;
     private String deskripsi_t;
     private String attlink_t;
     private Date waktu_t;
-    private int status_t;
+    private boolean status_t;
+    private String author;
     private Date created_at;
     private Date updated_at;
-    private String author;
-    private String noonline_t;
+
 
 
     public TugasModel() {
     }
 
-    public TugasModel(int no_t, String deskripsi_t, String attlink_t, Date waktu_t, int status_t, Date created_at, Date updated_at, String author, String noonline_t) {
+    public TugasModel(int no_t, String uid, String deskripsi_t, String attlink_t, Date waktu_t, boolean status_t, String author, Date created_at, Date updated_at) {
+        this.no_t = no_t;
+        this.uid = uid;
+        this.deskripsi_t = deskripsi_t;
+        this.attlink_t = attlink_t;
+        this.waktu_t = waktu_t;
+        this.status_t = status_t;
+        this.author = author;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
+    public TugasModel(int no_t, String deskripsi_t, String attlink_t, Date waktu_t, boolean status_t, String author, Date updated_at) {
         this.no_t = no_t;
         this.deskripsi_t = deskripsi_t;
         this.attlink_t = attlink_t;
         this.waktu_t = waktu_t;
         this.status_t = status_t;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
         this.author = author;
-        this.noonline_t = noonline_t;
+        this.updated_at = updated_at;
     }
 
     public int getNo_t() {
@@ -47,6 +54,14 @@ public class TugasModel extends RealmObject{
 
     public void setNo_t(int no_t) {
         this.no_t = no_t;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getDeskripsi_t() {
@@ -73,13 +88,20 @@ public class TugasModel extends RealmObject{
         this.waktu_t = waktu_t;
     }
 
-
-    public int getStatus_t() {
+    public boolean isStatus_t() {
         return status_t;
     }
 
-    public void setStatus_t(int status_t) {
+    public void setStatus_t(boolean status_t) {
         this.status_t = status_t;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public Date getCreated_at() {
@@ -96,21 +118,5 @@ public class TugasModel extends RealmObject{
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getNoonline_t() {
-        return noonline_t;
-    }
-
-    public void setNoonline_t(String noonline_t) {
-        this.noonline_t = noonline_t;
     }
 }
