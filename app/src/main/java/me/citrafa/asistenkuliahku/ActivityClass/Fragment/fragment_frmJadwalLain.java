@@ -13,18 +13,19 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 import me.citrafa.asistenkuliahku.OperationRealm.DateStorageOperation;
 import me.citrafa.asistenkuliahku.OperationRealm.JadwalLainOperation;
 import me.citrafa.asistenkuliahku.R;
+import me.citrafa.asistenkuliahku.SessionManager.SessionManager;
 
 import static java.lang.String.valueOf;
 
@@ -41,6 +42,7 @@ public class fragment_frmJadwalLain extends Fragment {
     private int mYear, mMonth, mDay, mHour, mMinute;
     Context mContext;
     Date DateS,DateF;
+    SessionManager session;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_frm_jadwal_lain, container, false);
@@ -53,6 +55,7 @@ public class fragment_frmJadwalLain extends Fragment {
         DSO = new DateStorageOperation();
         //no_jl=getArguments().getInt("ID");
         initView(view);
+        session = new SessionManager(getActivity());
 
         txtwaktuS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,16 +90,17 @@ public class fragment_frmJadwalLain extends Fragment {
         int ids = id(10000);
         final int dateID = DSO.getNextId();
         String nama = txtNama.getText().toString().trim();
+        String uid = uuid();
         Date waktuS = DateS;
         Date waktuF = DateF;
         String tempat = txttempat.getText().toString().trim();
         String deskripsi = txtdeskripsi.getText().toString();
-        int status = 1;
+        Boolean status = true;
         Date created_at=getCurrentTimeStamp();
         Date updated_at=getCurrentTimeStamp();
         String Author="User";
         String noOnline="test";
-        jml = new JadwalLainModel(ids,nama,waktuS,waktuF,tempat,deskripsi,status,Author,created_at,updated_at,noOnline);
+        jml = new JadwalLainModel(ids,uid,nama,waktuS,waktuF,tempat,deskripsi,status,Author,created_at,updated_at);
         dso = new DateStorageModel(dateID,ids,modelName,waktuS,waktuF);
         DSO.insertDatetoStorage(dso);
         JUO.tambahJadwalLain(jml);
@@ -221,6 +225,16 @@ public class fragment_frmJadwalLain extends Fragment {
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
+    }
+    private void insert(JadwalLainModel  jadwalLainModel){
+        JUO.tambahJadwalLain(jadwalLainModel);
+
+    }
+    private void update(){
+
+    }
+    public String uuid(){
+        return UUID.randomUUID().toString().toString();
     }
 
 }

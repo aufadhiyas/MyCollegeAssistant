@@ -153,12 +153,15 @@ public class frmLogin extends AppCompatActivity {
                     boolean error = jObjs.getBoolean("error");
                     String status_verifikasi = jObjs.getString("status_verifikasi");
                     String email = jObjs.getString("email");
+                    String nama = jObjs.getString("nama");
                     // Check for error node in json
                     if (!error) {
                         // user successfully logged in
                         // Create login session
                         if (status_verifikasi.equals("0")){
                             session.setVerifyStat(false);
+                            session.setEmailUser(email);
+                            session.setNamaUser(nama);
                             Intent intent = new Intent(frmLogin.this, frmVerifikasi.class);
                             String Email = null;
                             intent.putExtra("email",email);
@@ -166,6 +169,8 @@ public class frmLogin extends AppCompatActivity {
 
                         }else{
                             session.setLogin(true);
+                            session.setEmailUser(email);
+                            session.setNamaUser(nama);
                             Intent intent = new Intent(frmLogin.this,
                                     Dashboard.class);
                             startActivity(intent);

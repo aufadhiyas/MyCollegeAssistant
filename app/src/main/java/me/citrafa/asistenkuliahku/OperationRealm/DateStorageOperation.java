@@ -3,8 +3,10 @@ package me.citrafa.asistenkuliahku.OperationRealm;
 import android.util.Log;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
+import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 
 /**
  * Created by SENSODYNE on 27/04/2017.

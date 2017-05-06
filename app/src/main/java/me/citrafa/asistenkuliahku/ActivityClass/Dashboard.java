@@ -77,8 +77,7 @@ public class Dashboard extends AppCompatActivity
         setContentView(R.layout.activity_dashboard);
         WeatherMap weatherMap = new WeatherMap(this, OWM_API_KEY);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        txtnama = (TextView)findViewById(R.id.lblNamaDashboard);
-        txtEmail = (TextView)findViewById(R.id.lblEmailDashboard);
+
         imgProfile = (ImageView)findViewById(R.id.imgProfileDashboard);
         lblnamaKegiatan = (TextView)findViewById(R.id.namaKegiatan) ;
         lblTime = (TextView)findViewById(R.id.TimeRemainingDahsboard) ;
@@ -104,6 +103,11 @@ public class Dashboard extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        txtnama = (TextView)header.findViewById(R.id.lblNamaDashboard);
+        txtEmail = (TextView)header.findViewById(R.id.lblEmailDashboard);
+        txtEmail.setText(session.getEmaiUser());
+        txtnama.setText(session.getNamaUser());
         weatherMap.getLocationWeather(Lat, Long, new WeatherCallback() {
             @Override
             public void success(WeatherResponseModel response) {

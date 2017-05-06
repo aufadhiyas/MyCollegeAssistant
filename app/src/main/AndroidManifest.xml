@@ -31,9 +31,6 @@
             android:name=".ActivityClass.frmDaftar"
             android:label="Daftar Akun" />
         <activity
-            android:name=".ActivityClass.menuJadwalKuliah"
-            android:label="Menu Jadwal Kuliah" />
-        <activity
             android:name=".ActivityClass.menuJadwalUjian"
             android:label="Jadwal Ujianku" />
         <activity

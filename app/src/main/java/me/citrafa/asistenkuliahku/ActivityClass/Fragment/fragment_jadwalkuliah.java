@@ -26,11 +26,10 @@ import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import me.citrafa.asistenkuliahku.ActivityClass.Dashboard;
-import me.citrafa.asistenkuliahku.ActivityClass.frmDaftar;
+
 import me.citrafa.asistenkuliahku.ActivityClass.frmJadwalKuliah;
 import me.citrafa.asistenkuliahku.AdapterRecycleView.AdapterJadwalKuliahNew;
-import me.citrafa.asistenkuliahku.AdapterRecycleView.AdapterJadwalKuliahRV;
+
 import me.citrafa.asistenkuliahku.Jadwal;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 import me.citrafa.asistenkuliahku.OperationRealm.RealmController;
@@ -109,13 +108,14 @@ public class fragment_jadwalkuliah extends Fragment{
         realm.getDefaultInstance();
         View rootView = inflater.inflate(R.layout.fragment_jadwal_kuliah, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerjk);
-        data = realm.where(JadwalKuliahModel.class).findAll();
-        RealmResults<JadwalKuliahModel> jkm = realm.where(JadwalKuliahModel.class).findAll().sort("nohari", Sort.ASCENDING);
-        adapter = new AdapterJadwalKuliahNew(data,jkm);
-        final LinearLayoutManager layout = new LinearLayoutManager(getActivity());
-        layout.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layout);
-        recyclerView.setAdapter(adapter);
+        data = realm.where(JadwalKuliahModel.class).equalTo("status_jk",true).findAll();
+        RealmResults<JadwalKuliahModel> jkm = realm.where(JadwalKuliahModel.class).equalTo("status_jk",true).findAll().sort("nohari", Sort.ASCENDING);
+            adapter = new AdapterJadwalKuliahNew(data,jkm);
+            final LinearLayoutManager layout = new LinearLayoutManager(getActivity());
+            layout.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(layout);
+            recyclerView.setAdapter(adapter);
+
         fab = (FloatingActionButton)rootView.findViewById(R.id.fabAddJadwalKuliah);
         fab.show();
         fab.setOnClickListener(new View.OnClickListener() {

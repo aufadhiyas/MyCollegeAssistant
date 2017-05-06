@@ -29,7 +29,6 @@ import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 import me.citrafa.asistenkuliahku.ActivityClass.frmJadwalKuliah;
 import me.citrafa.asistenkuliahku.ActivityClass.frmTugas;
-import me.citrafa.asistenkuliahku.AdapterList.CustomListAdapter;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 import me.citrafa.asistenkuliahku.OperationRealm.JadwalKuliahOperation;
@@ -70,41 +69,43 @@ public class AdapterJadwalKuliahNew extends RealmRecyclerViewAdapter<JadwalKulia
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final JadwalKuliahModel jk = jkm.get(position);
-        Date date1 = jk.getWaktu_jk();
-        Date date2 = jk.getWaktu_jkf();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        String Jam1 = sdf.format(date1);
-        String Jam2 = sdf.format(date2);
-        if (position != 0){
-            if (jk.getHari_jk().equalsIgnoreCase(jkm.get(position - 1).getHari_jk())){
-                holder.txtHari.setVisibility(View.GONE);
-            }else{
+
+            holder.nullLayout.setVisibility(View.GONE);
+            Date date1 = jk.getWaktu_jk();
+            Date date2 = jk.getWaktu_jkf();
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String Jam1 = sdf.format(date1);
+            String Jam2 = sdf.format(date2);
+            if (position != 0) {
+                if (jk.getHari_jk().equalsIgnoreCase(jkm.get(position - 1).getHari_jk())) {
+                    holder.txtHari.setVisibility(View.GONE);
+                } else {
+                    holder.txtHari.setVisibility(View.VISIBLE);
+                }
+            } else {
                 holder.txtHari.setVisibility(View.VISIBLE);
             }
-        }else {
-            holder.txtHari.setVisibility(View.VISIBLE);
-        }
 
-        holder.txtHari.setText(jk.getHari_jk());
-        holder.txtJam.setText(Jam1);
-        holder.txtJam1.setText(Jam2);
-        holder.txtMakul.setText(jk.getMakul_jk());
-        holder.txtDosen.setText(jk.getDosen_jk());
-        holder.txtRuangan.setText(jk.getRuangan_jk());
-        final int module = jk.getNo_jk();
+            holder.txtHari.setText(jk.getHari_jk());
+            holder.txtJam.setText(Jam1);
+            holder.txtJam1.setText(Jam2);
+            holder.txtMakul.setText(jk.getMakul_jk());
+            holder.txtDosen.setText(jk.getDosen_jk());
+            holder.txtRuangan.setText(jk.getRuangan_jk());
+            final int module = jk.getNo_jk();
 
-        if (jk.Tugas.isEmpty()){
-            holder.statusTugas.setText("Tidak Ada Tugas");
-        }else {
-            holder.statusTugas.setText("Ada Tugas");
-        }
-
-        holder.imgButtonJK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupMenu(holder.imgButtonJK,position,module,jk.getMakul_jk());
+            if (jk.Tugas.isEmpty()) {
+                holder.statusTugas.setText("Tidak Ada Tugas");
+            } else {
+                holder.statusTugas.setText("Ada Tugas");
             }
-        });
+
+            holder.imgButtonJK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPopupMenu(holder.imgButtonJK, position, module, jk.getMakul_jk());
+                }
+            });
 
 
     }
@@ -113,6 +114,7 @@ public class AdapterJadwalKuliahNew extends RealmRecyclerViewAdapter<JadwalKulia
         TextView txtHari,txtJam,txtJam1,txtMakul,txtDosen,txtRuangan,statusTugas;
         ImageView imgTugas;
         ImageButton imgButtonJK;
+        RelativeLayout nullLayout;
 
         public MyViewHolder(View v) {
             super(v);
@@ -127,6 +129,7 @@ public class AdapterJadwalKuliahNew extends RealmRecyclerViewAdapter<JadwalKulia
             imgTugas = (ImageView)v.findViewById(R.id.iconTugasRowJKn);
             statusTugas = (TextView)v.findViewById(R.id.rowstatusTugasJKn);
             imgButtonJK = (ImageButton)v.findViewById(R.id.menuOptionJKn);
+            nullLayout = (RelativeLayout)v.findViewById(R.id.rowJKNull);
 
         }
     }

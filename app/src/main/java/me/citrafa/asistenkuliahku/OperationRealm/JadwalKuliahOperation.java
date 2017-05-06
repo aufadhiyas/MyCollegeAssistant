@@ -1,10 +1,17 @@
 package me.citrafa.asistenkuliahku.OperationRealm;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
+
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 
 /**
@@ -49,6 +56,15 @@ public class JadwalKuliahOperation {
         realm.beginTransaction();
         realm.commitTransaction();
     }
+    public void editJadwalKuliah(final JadwalKuliahModel obj){
+        realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(obj);
+            }
+        });
+    }
     public int getNextId() {
         realm = Realm.getDefaultInstance();
         Number currentID = realm.where(JadwalKuliahModel.class).max("no_jk");
@@ -77,9 +93,12 @@ public class JadwalKuliahOperation {
             @Override
             public void execute(Realm realm) {
                 JadwalKuliahModel jk = realm.where(JadwalKuliahModel.class).equalTo("no_jk", id).findFirst();
-                if (jk !=null){
-                    jk.deleteFromRealm();
+                RealmResults jks = realm.where(JadwalKuliahModel.class).findAll();
+                if (jk != null) {
+                        jk.setStatus_jk(false);
+                        jk.setUpdated_at(getCurrentTimeStamp());
                 }
+
             }
             }, new Realm.Transaction.OnSuccess() {
             public void onSuccess() {
@@ -103,13 +122,25 @@ public class JadwalKuliahOperation {
                 for (Integer id : idsToDelete){
                     JadwalKuliahModel jadwalKuliahModel = realm.where(JadwalKuliahModel.class).equalTo("no_jk",id).findFirst();
                     if(jadwalKuliahModel !=null){
-                        jadwalKuliahModel.deleteFromRealm();
+                        jadwalKuliahModel.setStatus_jk(false);
+                        jadwalKuliahModel.setUpdated_at(getCurrentTimeStamp());
                     }
                 }
             }
         });
 
 
+    }
+    public static Date getCurrentTimeStamp(){
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        try {
+            return sdfDate.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return now;
     }
 
 }
