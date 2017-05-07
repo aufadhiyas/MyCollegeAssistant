@@ -1,6 +1,7 @@
 package me.citrafa.asistenkuliahku.OperationRealm;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import io.realm.Realm;
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
@@ -35,6 +36,33 @@ public class TugasOperation {
         });
     }
     public void updatedata(final TugasModel obj){
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(obj);
+        if (obj.getWaktu_t() !=null){
+            DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",obj.getNo_t()).findFirst();
+            if (dso !=null) {
+                if (obj.getWaktu_t() == null) {
+                    dso.deleteFromRealm();
+                } else if (obj.getWaktu_t() != null) {
+                    dso.setDateS(obj.getWaktu_t());
+                } else {
+                    Log.d(TAG, "DATE TIDAK DI KENALI");
+                }
+            }
+        }
+        realm.commitTransaction();
+
+    }
+    public void hapusData(final int No){
+        realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                TugasModel tm = realm.where(TugasModel.class).equalTo("no_t",No).findFirst();
+                tm.setStatus_t(false);
+            }
+        });
 
     }
     public int getNextId() {

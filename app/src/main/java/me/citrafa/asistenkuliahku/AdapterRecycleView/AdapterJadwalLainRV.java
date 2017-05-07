@@ -158,6 +158,7 @@ public class AdapterJadwalLainRV extends RealmRecyclerViewAdapter<JadwalLainMode
                     return true;
                 case R.id.MenuJLHapus:
                     Toast.makeText(mContext, "clicked Hapus = " +no, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
                     return true;
             }
             return false;

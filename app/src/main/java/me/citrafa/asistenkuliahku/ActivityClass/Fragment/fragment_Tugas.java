@@ -89,13 +89,15 @@ public class fragment_Tugas extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tugas, container, false);
         this.realm = RealmController.with(getActivity()).getRealm();
         realm.getDefaultInstance();
-        data = realm.where(TugasModel.class).findAll();
-        RealmResults<TugasModel> jkm = realm.where(TugasModel.class).findAll();
+        data = realm.where(TugasModel.class).equalTo("status_t",true).findAll();
+        RealmResults<TugasModel> jkm = realm.where(TugasModel.class).equalTo("status_t",true).findAll();
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerTugas);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AdapterTugasRV(data, jkm);
         recyclerView.setAdapter(adapter);
+        recyclerView.getRecycledViewPool().clear();
+        adapter.notifyDataSetChanged();
         Toast.makeText(getActivity(), ""+jkm.size(), Toast.LENGTH_SHORT).show();
 
         return rootView;

@@ -118,6 +118,7 @@ public class AdapterJadwalUjianRV extends RealmRecyclerViewAdapter<JadwalUjianMo
                     return true;
                 case R.id.menuJUHapus:
                     Toast.makeText(mContext, "clicked Hapus = " +no, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
                     return true;
             }
             return false;

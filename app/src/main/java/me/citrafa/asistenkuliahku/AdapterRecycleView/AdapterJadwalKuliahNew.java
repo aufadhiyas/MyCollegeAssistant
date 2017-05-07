@@ -48,7 +48,7 @@ public class AdapterJadwalKuliahNew extends RealmRecyclerViewAdapter<JadwalKulia
     MaterialDialog mdl;
 
 
-    public AdapterJadwalKuliahNew(OrderedRealmCollection<JadwalKuliahModel> data, RealmResults<JadwalKuliahModel>jkm) {
+    public AdapterJadwalKuliahNew(@Nullable OrderedRealmCollection<JadwalKuliahModel> data, RealmResults<JadwalKuliahModel>jkm) {
         super(data, true);
         this.jkm = jkm;
         setHasStableIds(true);
@@ -155,7 +155,8 @@ public class AdapterJadwalKuliahNew extends RealmRecyclerViewAdapter<JadwalKulia
             switch (item.getItemId()){
                 case R.id.MenuJKTugas:
                     Intent tambahTugas = new Intent(mContext, frmTugas.class);
-                    tambahTugas.putExtra("id",id);
+                    tambahTugas.putExtra("idJK",id);
+                    tambahTugas.putExtra("statusFormTugas",0);
                     mContext.startActivity(tambahTugas);
                     break;
                 case R.id.MenuJKUbah:
@@ -172,6 +173,7 @@ public class AdapterJadwalKuliahNew extends RealmRecyclerViewAdapter<JadwalKulia
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     JAO.deleteItemAsync(realm,id);
+                                    notifyDataSetChanged();
                                 }
                             })
                             .setNegativeButton("Batal",null)

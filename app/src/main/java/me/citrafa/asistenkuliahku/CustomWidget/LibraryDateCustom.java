@@ -7,6 +7,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -51,7 +52,7 @@ public class LibraryDateCustom {
 
 
     public String getHaridanTanggalUntukListSingle(Date date){
-        String Jadi;
+        String Jadi = null;
         String Hari = getHariDariWaktu(date);
         String Tanggal = getWaktuTanggalBiasa(date);
         String Jam;
@@ -139,7 +140,6 @@ public class LibraryDateCustom {
                                         String formatedDate = sdf.format(new Date(year,monthOfYear,dayOfMonth,hourOfDay,minute));
                                         try {
                                             Date date = sdf.parse(formatedDate);
-                                            setFINALDATE(date);
                                             txt1.setText(getHariDariWaktu(date)+", "+getWaktuTanggalBiasa(date));
                                         } catch (ParseException e) {
 

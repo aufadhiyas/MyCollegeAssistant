@@ -128,6 +128,7 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     CO.deleteItemAsync(realm,id);
+                                    notifyDataSetChanged();
                                 }
                             })
                             .setNegativeButton("Batal",null)
