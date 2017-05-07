@@ -27,8 +27,11 @@ public class JadwalLainOperation {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(obj);
-                DateStorageModel dso =new DateStorageModel(getIdDate(),obj.getNo_jl(),"JadwalLainModel",obj.getWaktus_jl(),obj.getWaktuf_jl());
-                realm.copyToRealm(dso);
+                if (obj.getStatus_jl()!=null) {
+                    DateStorageModel dso = new DateStorageModel(getIdDate(), obj.getNo_jl(), "JadwalLainModel", obj.getWaktus_jl(), obj.getWaktuf_jl(), true);
+                    realm.copyToRealm(dso);
+                }
+
             }
         }, new Realm.Transaction.OnSuccess() {
             public void onSuccess() {
@@ -71,7 +74,7 @@ public class JadwalLainOperation {
                 obj.setStatus_jl(false);
                 obj.setUpdated_at(getCurrentTimeStamp());
                 if (dso!=null){
-                    dso.deleteFromRealm();
+                    dso.setStatus(false);
                 }
         realm.commitTransaction();
 //            }

@@ -32,6 +32,19 @@ public class JadwalUjianOperation {
         realm.beginTransaction();
         realm.commitTransaction();
     }
+    public void updateJadwalUjian(final JadwalUjianModel obj){
+        realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+            }
+        });
+    }
+
+
+
+
     public int getNextId() {
         realm = Realm.getDefaultInstance();
         Number currentID = realm.where(JadwalUjianModel.class).max("no_ju");

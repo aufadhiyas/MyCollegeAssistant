@@ -17,18 +17,27 @@ public class DateStorageModel extends RealmObject {
     private String modelName;
     private Date dateS;
     private Date dateF;
+    private Boolean status;
 
     public DateStorageModel() {
     }
 
-    public DateStorageModel(int id, int id_model, String modelName, Date dateS, Date dateF) {
+    public DateStorageModel(int id, int id_model, String modelName, Date dateS, Date dateF, Boolean status) {
         this.id = id;
         this.id_model = id_model;
         this.modelName = modelName;
         this.dateS = dateS;
         this.dateF = dateF;
+        this.status = status;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

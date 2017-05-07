@@ -19,7 +19,7 @@ public class JadwalUjianModel extends RealmObject{
     private String jenis;
     private String deskripsi;
     private String ruangan;
-    private boolean status_ju;
+    private Boolean status_ju;
     private String Author;
     private Date created_at;
     private Date updated_at;

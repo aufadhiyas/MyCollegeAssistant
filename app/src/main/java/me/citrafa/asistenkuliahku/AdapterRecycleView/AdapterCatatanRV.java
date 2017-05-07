@@ -3,6 +3,7 @@ package me.citrafa.asistenkuliahku.AdapterRecycleView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -15,13 +16,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import butterknife.InjectView;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
+import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_frm_catatan;
 import me.citrafa.asistenkuliahku.ActivityClass.frmJadwalKuliah;
 import me.citrafa.asistenkuliahku.ActivityClass.frmTugas;
+import me.citrafa.asistenkuliahku.ActivityClass.menuCatatan;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
 import me.citrafa.asistenkuliahku.OperationRealm.CatatanOperation;
 import me.citrafa.asistenkuliahku.R;
@@ -36,11 +41,13 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
     Context mContext;
     CatatanOperation CO;
     Realm realm;
+    menuCatatan mc;
 
-    public AdapterCatatanRV(@Nullable OrderedRealmCollection<CatatanModel> data, RealmResults<CatatanModel> catatan) {
+    public AdapterCatatanRV(Context context,@Nullable OrderedRealmCollection<CatatanModel> data, RealmResults<CatatanModel> catatan) {
         super(data, true);
         this.data = data;
         this.catatan = catatan;
+        mc = (menuCatatan)context;
         CO = new CatatanOperation();
         realm = Realm.getDefaultInstance();
 
@@ -60,8 +67,10 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
     public void onBindViewHolder(final myViewHolder holder, final int position) {
         final CatatanModel catatanModel = catatan.get(position);
         holder.txt1.setText(catatanModel.getNama_c());
+        SimpleDateFormat waktu = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         if (catatanModel.getWaktu_c() !=null) {
-            holder.txt2.setText(catatanModel.getWaktu_c());
+
+            holder.txt2.setText(waktu.format(catatanModel.getWaktu_c()));
             holder.txt2.setVisibility(View.VISIBLE);
         }
         holder.txt3.setText(catatanModel.getDeskripsi_c());
@@ -115,9 +124,14 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
             switch (item.getItemId()){
 
                 case R.id.MenuCUbah:
-                    Intent edit = new Intent(mContext,frmJadwalKuliah.class);
-                    edit.putExtra("id",id);
-                    mContext.startActivity(edit);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("noCatatan",id);
+                    fragment_frm_catatan frm = new fragment_frm_catatan();
+                    frm.setArguments(bundle);
+                    mc.getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.activity_menu_catatan, frm).addToBackStack(null)
+                            .commit();
                     break;
                 case R.id.MenuCHapus:
 
@@ -127,7 +141,7 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
                             .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    CO.deleteItemAsync(realm,id);
+                                    CO.hapusCatatan(id);
                                     notifyDataSetChanged();
                                 }
                             })

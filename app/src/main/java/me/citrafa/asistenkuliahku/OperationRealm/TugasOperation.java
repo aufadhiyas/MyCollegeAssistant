@@ -24,7 +24,7 @@ public class TugasOperation {
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(obj);
                 if (obj.getWaktu_t()!=null){
-                    DateStorageModel dso =new DateStorageModel(getIdDate(),obj.getNo_t(),"TugasModel",obj.getWaktu_t(),null);
+                    DateStorageModel dso =new DateStorageModel(getIdDate(),obj.getNo_t(),"TugasModel",obj.getWaktu_t(),null,true);
                     realm.copyToRealm(dso);
                 }
             }
@@ -40,15 +40,18 @@ public class TugasOperation {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(obj);
         if (obj.getWaktu_t() !=null){
-            DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",obj.getNo_t()).findFirst();
-            if (dso !=null) {
-                if (obj.getWaktu_t() == null) {
-                    dso.deleteFromRealm();
-                } else if (obj.getWaktu_t() != null) {
-                    dso.setDateS(obj.getWaktu_t());
-                } else {
-                    Log.d(TAG, "DATE TIDAK DI KENALI");
-                }
+            final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",obj.getNo_t()).findFirst();
+            if (dso !=null){
+                dso.setDateS(obj.getWaktu_t());
+                dso.setStatus(true);
+            }else{
+                DateStorageModel ds = new DateStorageModel(getIdDate(),obj.getNo_t(),"TugasModel",obj.getWaktu_t(),null,true);
+                realm.copyToRealmOrUpdate(ds);
+            }
+        }else{
+            final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",obj.getNo_t()).findFirst();
+            if (dso!=null){
+                dso.setStatus(false);
             }
         }
         realm.commitTransaction();
@@ -63,7 +66,7 @@ public class TugasOperation {
                 tm.setStatus_t(false);
                 DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",tm.getNo_t()).findFirst();
                 if (dso !=null) {
-                        dso.deleteFromRealm();
+                        dso.setStatus(false);
                 }
             }
         });

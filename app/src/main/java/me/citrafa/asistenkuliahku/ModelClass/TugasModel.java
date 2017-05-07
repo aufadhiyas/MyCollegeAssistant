@@ -16,7 +16,7 @@ public class TugasModel extends RealmObject{
     private String deskripsi_t;
     private String attlink_t;
     private Date waktu_t;
-    private boolean status_t;
+    private Boolean status_t;
     private String author;
     private Date created_at;
     private Date updated_at;

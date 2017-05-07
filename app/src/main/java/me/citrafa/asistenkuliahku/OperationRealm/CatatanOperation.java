@@ -6,6 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
+import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 
 /**
@@ -25,6 +26,10 @@ public class CatatanOperation {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(obj);
+                if (obj.getWaktu_c() !=null){
+                    DateStorageModel dso = new DateStorageModel(getIdDate(),obj.getNo_c(),"CatatanModel",obj.getWaktu_c(),null,true);
+                    realm.copyToRealm(dso);
+                }
             }
         }, new Realm.Transaction.OnSuccess() {
             public void onSuccess() {
@@ -34,6 +39,48 @@ public class CatatanOperation {
         });
         realm.beginTransaction();
         realm.commitTransaction();
+    }
+    public void updateCatatan(final CatatanModel obj){
+        realm = Realm.getDefaultInstance();
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(obj);
+                if (obj.getWaktu_c() !=null){
+                    final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","CatatanModel").equalTo("id_model",obj.getNo_c()).findFirst();
+                    if (dso !=null){
+                        dso.setDateS(obj.getWaktu_c());
+                        dso.setStatus(true);
+                    }else{
+                        DateStorageModel ds = new DateStorageModel(getIdDate(),obj.getNo_c(),"CatatanModel",obj.getWaktu_c(),null,true);
+                        realm.copyToRealmOrUpdate(ds);
+                    }
+                }else{
+                    final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","CatatanModel").equalTo("id_model",obj.getNo_c()).findFirst();
+                    if (dso!=null){
+                        dso.setStatus(false);
+                    }
+                }
+            }
+        });
+
+    }
+    public void hapusCatatan(int id){
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        CatatanModel cm = realm.where(CatatanModel.class).equalTo("no_c",id).findFirst();
+        final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","CatatanModel").equalTo("id_model",id).findFirst();
+        if (cm !=null){
+            cm.setStatus(false);
+            if (cm.getWaktu_c()!=null){
+                if (dso!=null){
+                    dso.setStatus(false);
+                }
+            }
+        }
+        realm.commitTransaction();
+
     }
     public int getNextId() {
         realm = Realm.getDefaultInstance();
@@ -79,5 +126,16 @@ public class CatatanOperation {
                                           }
                                       }
         );
+    }
+    public int getIdDate(){
+        realm = Realm.getDefaultInstance();
+        Number number = realm.where(DateStorageModel.class).max("id");
+        int nextid;
+        if (number ==null){
+            nextid = 1;
+        }else{
+            nextid = number.intValue()+1;
+        }
+        return nextid;
     }
 }

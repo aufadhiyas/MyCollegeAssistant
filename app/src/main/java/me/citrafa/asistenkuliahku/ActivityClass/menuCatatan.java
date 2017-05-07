@@ -27,9 +27,9 @@ public class menuCatatan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_catatan);
         realm = Realm.getDefaultInstance();
-        data = realm.where(CatatanModel.class).findAll();
+        data = realm.where(CatatanModel.class).equalTo("status",true).findAll();
         recyclerView = (RecyclerView)findViewById(R.id.recyclerC);
-        adapter = new AdapterCatatanRV(realm.where(CatatanModel.class).findAll(),data);
+        adapter = new AdapterCatatanRV(menuCatatan.this,realm.where(CatatanModel.class).equalTo("status",true).findAll(),data);
         final LinearLayoutManager layout = new LinearLayoutManager(this);
         layout.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layout);
@@ -47,9 +47,13 @@ public class menuCatatan extends AppCompatActivity {
 
     }
     private void changeFragment(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("noCatatan",10000);
+        fragment_frm_catatan frm = new fragment_frm_catatan();
+        frm.setArguments(bundle);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.activity_menu_catatan, new fragment_frm_catatan()).addToBackStack(null)
+                .add(R.id.activity_menu_catatan, frm).addToBackStack(null)
                 .commit();
     }
 

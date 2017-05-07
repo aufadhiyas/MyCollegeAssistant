@@ -94,8 +94,8 @@ public class fragment_form_ujian extends Fragment {
         Date created_at = CW.getCurrentTimeStamp();
         Date updated_at = CW.getCurrentTimeStamp();
         int Status = 1;
-        jum = new JadwalUjianModel(ids,Jenis,Makul,Waktu,Deskripsi,Ruangan,Status,Author,created_at,updated_at);
-        datesSave = new DateStorageModel(dateID,ids,modelName,Waktu,Waktuf);
+//        jum = new JadwalUjianModel(ids,Jenis,Makul,Waktu,Deskripsi,Ruangan,Status,Author,created_at,updated_at);
+//        datesSave = new DateStorageModel(dateID,ids,modelName,Waktu,Waktuf);
         JUO.tambahJadwalUjian(jum);
         DSO.insertDatetoStorage(datesSave);
     }
