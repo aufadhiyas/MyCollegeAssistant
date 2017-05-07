@@ -57,16 +57,20 @@ public class AdapterJadwalUjianRV extends RealmRecyclerViewAdapter<JadwalUjianMo
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final JadwalUjianModel ju = jadwalUjianModels.get(position);
         holder.data = ju;
+        if (ju !=null){
+            Date waktu = ju.getWaktu();
+            SimpleDateFormat Dates = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
+            String Jadi=Dates.format(waktu);
+            holder.txt1.setText(Jadi);
+            holder.txt2.setText(ju.getJenis());
+            holder.txt3.setText(ju.getRuangan());
+            holder.txt4.setText(ju.getNama_makul());
+            holder.txt5.setText(ju.getDeskripsi());
+        }
 
-        Date waktu = ju.getWaktu();
-        SimpleDateFormat Dates = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
-        String Jadi=Dates.format(waktu);
 
-        holder.txt1.setText(Jadi);
-        holder.txt2.setText(ju.getJenis());
-        holder.txt3.setText(ju.getRuangan());
-        holder.txt4.setText(ju.getNama_makul());
-        holder.txt5.setText(ju.getDeskripsi());
+
+
 
         holder.imgBtn1.setOnClickListener(new View.OnClickListener() {
             @Override

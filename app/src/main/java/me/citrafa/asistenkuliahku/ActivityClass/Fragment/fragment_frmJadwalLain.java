@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import io.realm.Realm;
+import me.citrafa.asistenkuliahku.ActivityClass.menuJadwalLain;
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 import me.citrafa.asistenkuliahku.OperationRealm.DateStorageOperation;
@@ -50,37 +51,39 @@ public class fragment_frmJadwalLain extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //id = getArguments().getInt("noJL");
-        no_jl=getArguments().getInt("ID",0);
+
         return inflater.inflate(R.layout.fragment_frm_jadwal_lain, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((menuJadwalLain) getActivity()).hideFloatingActionButton();
+        initView(view);
         realm = Realm.getDefaultInstance();
         JUO = new JadwalLainOperation();
+        no_jl=getArguments().getInt("noJL",0);
         DSO = new DateStorageOperation();
         if (no_jl==0){
             stat = 10000;
         }else{
             stat = no_jl;
         }
+
         if (no_jl !=0){
             JadwalLainModel jl = realm.where(JadwalLainModel.class).equalTo("no_jl",no_jl).findFirst();
-            if (jl.isValid()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd-MM-yyyy hh:mm");
-                txtNama.setText(jl.getNama_jl());
-                txtwaktuS.setText(sdf.format(jl.getWaktus_jl()));
-                txtwaktuF.setText(sdf.format(jl.getWaktuf_jl()));
-                txttempat.setText(jl.getTempat_jl());
-                txtdeskripsi.setText(jl.getDeskripsi_jl());
-                DateS = jl.getWaktus_jl();
-                DateF = jl.getWaktuf_jl();
-            }
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd-MM-yyyy hh:mm");
+            txtNama.setText(jl.getNama_jl());
+            txtwaktuS.setText(sdf.format(jl.getWaktus_jl()));
+            txtwaktuF.setText(sdf.format(jl.getWaktuf_jl()));
+            txttempat.setText(jl.getTempat_jl());
+            txtdeskripsi.setText(jl.getDeskripsi_jl());
+            DateS = jl.getWaktus_jl();
+            DateF = jl.getWaktuf_jl();
         }
 
 
-        initView(view);
+
         session = new SessionManager(getActivity());
 
         txtwaktuS.setOnClickListener(new View.OnClickListener() {

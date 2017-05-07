@@ -1,10 +1,12 @@
 package me.citrafa.asistenkuliahku.AdapterRecycleView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +38,7 @@ import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_frm_catatan;
 import me.citrafa.asistenkuliahku.ActivityClass.InterfaceFragment.FragmentCommunication;
 import me.citrafa.asistenkuliahku.ActivityClass.menuJadwalLain;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
+import me.citrafa.asistenkuliahku.OperationRealm.JadwalLainOperation;
 import me.citrafa.asistenkuliahku.R;
 
 /**
@@ -49,13 +52,16 @@ public class AdapterJadwalLainRV extends RealmRecyclerViewAdapter<JadwalLainMode
     private RealmResults<JadwalLainModel> jlm;
     menuJadwalLain mjl;
     FragmentManager manager;
+    JadwalLainOperation jlo;
 
-    public AdapterJadwalLainRV(OrderedRealmCollection<JadwalLainModel> data, RealmResults<JadwalLainModel> jlm) {
+
+    public AdapterJadwalLainRV(Context context,OrderedRealmCollection<JadwalLainModel> data, RealmResults<JadwalLainModel> jlm) {
         super(data, true);
         this.jlm = jlm;
+        mjl = (menuJadwalLain)context;
         setHasStableIds(true);
         realm = Realm.getDefaultInstance();
-        mjl = new menuJadwalLain();
+        jlo=new JadwalLainOperation();
 
     }
 
@@ -102,7 +108,7 @@ public class AdapterJadwalLainRV extends RealmRecyclerViewAdapter<JadwalLainMode
             @Override
             public void onClick(View v) {
                 int No = jl.getNo_jl();
-                showPopupMenu(holder.ibutton,position,No);
+                showPopupMenu(holder.ibutton,position,No,jl.getNama_jl());
             }
         });
     }
@@ -128,38 +134,49 @@ public class AdapterJadwalLainRV extends RealmRecyclerViewAdapter<JadwalLainMode
             txt4 = (TextView)view.findViewById(R.id.lbl_jl_deskripsi);
         }
     }
-    private void showPopupMenu(View view,int position,int no){
+    private void showPopupMenu(View view,int position,int no,String Nama){
 
         PopupMenu popup = new PopupMenu(view.getContext(),view);
         MenuInflater inflate = popup.getMenuInflater();
         inflate.inflate(R.menu.popupmenu_jl, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(position,no));
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(position,no,Nama));
         popup.show();
     }
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener{
 
         private int position;
         private int no;
-        public MyMenuItemClickListener(int position,int no){
+        private String nama;
+        public MyMenuItemClickListener(int position,int no,String Nama){
             this.position = position;
             this.no = no;
+            this.nama=Nama;
         }
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.MenuJLUbah:
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("noJL",no);
-//                    fragment_frmJadwalLain fragment_frmJadwalLain = new fragment_frmJadwalLain();
-//                    fragment_frmJadwalLain.setArguments(bundle);
-//                    FragmentManager fm = mjl.getFragmentManager();
-//                    FragmentTransaction ft = fm.beginTransaction();
-//                    ft.replace(R.id.activity_menu_jadwal_lain, new fragment_frmJadwalLain()).addToBackStack(null).commit();
-                    return true;
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("noJL",no);
+                    fragment_frmJadwalLain fragment_frmJadwalLain = new fragment_frmJadwalLain();
+                    fragment_frmJadwalLain.setArguments(bundle);
+                    mjl.getFragmentManager().beginTransaction().replace(R.id.activity_menu_jadwal_lain, fragment_frmJadwalLain).addToBackStack(null).commit();
+                    break;
                 case R.id.MenuJLHapus:
-                    Toast.makeText(mContext, "clicked Hapus = " +no, Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
-                    return true;
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("Hapus jadwal lain?")
+                            .setMessage("Apa kamu yakin ingin menghapus jadwal : "+nama)
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    JadwalLainModel jl = realm.where(JadwalLainModel.class).equalTo("no_jl",no).findFirst();
+                                    jlo.delete(jl);
+                                    notifyDataSetChanged();
+                                }
+                            })
+                            .setNegativeButton("Batal",null)
+                            .show();
+                    break;
             }
             return false;
         }

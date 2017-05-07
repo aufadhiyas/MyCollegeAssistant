@@ -1,5 +1,6 @@
 package me.citrafa.asistenkuliahku.ActivityClass;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -40,9 +41,9 @@ public class menuJadwalLain extends AppCompatActivity {
 
 
         realm = Realm.getDefaultInstance();
-        RealmResults<JadwalLainModel> jlm = realm.where(JadwalLainModel.class).findAllSorted("waktus_jl", Sort.ASCENDING);
+        RealmResults<JadwalLainModel> jlm = realm.where(JadwalLainModel.class).equalTo("status_jl",true).findAllSorted("waktus_jl", Sort.ASCENDING);
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerJL);
-        adapter = new AdapterJadwalLainRV(realm.where(JadwalLainModel.class).findAll(),jlm);
+        adapter = new AdapterJadwalLainRV(menuJadwalLain.this,realm.where(JadwalLainModel.class).equalTo("status_jl",true).findAll(),jlm);
         final LinearLayoutManager layout = new LinearLayoutManager(this);
         layout.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layout);
@@ -65,11 +66,17 @@ public class menuJadwalLain extends AppCompatActivity {
         });
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         fab.show();
         adapter.notifyDataSetChanged();
+    }
+    public void showFloatingActionButton() {
+        fab.show();
+    }
+
+    public void hideFloatingActionButton() {
+        fab.hide();
     }
 }

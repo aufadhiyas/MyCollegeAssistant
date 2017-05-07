@@ -13,12 +13,13 @@ public class CatatanModel extends RealmObject {
 
     @PrimaryKey
     private int no_c;
+    private String uid;
     private String nama_c;
     private String deskripsi_c;
     private String waktu_c;
     private String attlink_c;
-    private String noonline_c;
     private String Author;
+    private boolean status;
     private Date created_at;
     private Date updated_at;
 
@@ -26,15 +27,27 @@ public class CatatanModel extends RealmObject {
     public CatatanModel() {
     }
 
-    public CatatanModel(int no_c, String nama_c, String deskripsi_c, String waktu_c, String attlink_c, String noonline_c, String author, Date created_at, Date updated_at) {
+    public CatatanModel(int no_c, String uid, String nama_c, String deskripsi_c, String waktu_c, String attlink_c, String author, boolean status, Date created_at, Date updated_at) {
+        this.no_c = no_c;
+        this.uid = uid;
+        this.nama_c = nama_c;
+        this.deskripsi_c = deskripsi_c;
+        this.waktu_c = waktu_c;
+        this.attlink_c = attlink_c;
+        Author = author;
+        this.status = status;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+    }
+
+    public CatatanModel(int no_c, String nama_c, String deskripsi_c, String waktu_c, String attlink_c, String author, boolean status, Date updated_at) {
         this.no_c = no_c;
         this.nama_c = nama_c;
         this.deskripsi_c = deskripsi_c;
         this.waktu_c = waktu_c;
         this.attlink_c = attlink_c;
-        this.noonline_c = noonline_c;
         Author = author;
-        this.created_at = created_at;
+        this.status = status;
         this.updated_at = updated_at;
     }
 
@@ -44,6 +57,14 @@ public class CatatanModel extends RealmObject {
 
     public void setNo_c(int no_c) {
         this.no_c = no_c;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getNama_c() {
@@ -78,20 +99,20 @@ public class CatatanModel extends RealmObject {
         this.attlink_c = attlink_c;
     }
 
-    public String getNoonline_c() {
-        return noonline_c;
-    }
-
-    public void setNoonline_c(String noonline_c) {
-        this.noonline_c = noonline_c;
-    }
-
     public String getAuthor() {
         return Author;
     }
 
     public void setAuthor(String author) {
         Author = author;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Date getCreated_at() {

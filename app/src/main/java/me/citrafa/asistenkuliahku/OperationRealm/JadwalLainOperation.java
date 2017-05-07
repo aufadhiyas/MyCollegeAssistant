@@ -63,16 +63,19 @@ public class JadwalLainOperation {
     }
     public void delete(final JadwalLainModel obj){
         realm = Realm.getDefaultInstance();
-
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("id_model",obj.getNo_jl()).equalTo("modelName","JadwalLainModel").findFirst();
+        final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("id_model",obj.getNo_jl()).equalTo("modelName","JadwalLainModel").findFirst();
+//        realm.executeTransactionAsync(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+        realm.beginTransaction();
                 obj.setStatus_jl(false);
                 obj.setUpdated_at(getCurrentTimeStamp());
-                dso.deleteFromRealm();
-            }
-        });
+                if (dso!=null){
+                    dso.deleteFromRealm();
+                }
+        realm.commitTransaction();
+//            }
+//        });
     }
     public int getNextId() {
         realm = Realm.getDefaultInstance();

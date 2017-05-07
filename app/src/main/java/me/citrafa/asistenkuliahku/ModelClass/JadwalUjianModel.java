@@ -13,12 +13,13 @@ public class JadwalUjianModel extends RealmObject{
 
     @PrimaryKey
     private int no_ju;
+    private String uid;
     private String nama_makul;
     private Date waktu;
     private String jenis;
     private String deskripsi;
     private String ruangan;
-    private int status_ju;
+    private boolean status_ju;
     private String Author;
     private Date created_at;
     private Date updated_at;
@@ -27,11 +28,12 @@ public class JadwalUjianModel extends RealmObject{
     public JadwalUjianModel() {
     }
 
-    public JadwalUjianModel(int no_ju, String Jenis, String nama_makul, Date waktu, String deskripsi, String ruangan, int status_ju, String author, Date created_at, Date updated_at) {
+    public JadwalUjianModel(int no_ju, String uid, String nama_makul, Date waktu, String jenis, String deskripsi, String ruangan, boolean status_ju, String author, Date created_at, Date updated_at) {
         this.no_ju = no_ju;
-        this.jenis = Jenis;
+        this.uid = uid;
         this.nama_makul = nama_makul;
         this.waktu = waktu;
+        this.jenis = jenis;
         this.deskripsi = deskripsi;
         this.ruangan = ruangan;
         this.status_ju = status_ju;
@@ -40,12 +42,16 @@ public class JadwalUjianModel extends RealmObject{
         this.updated_at = updated_at;
     }
 
-    public String getJenis() {
-        return jenis;
-    }
-
-    public void setJenis(String jenis) {
+    public JadwalUjianModel(int no_ju, String nama_makul, Date waktu, String jenis, String deskripsi, String ruangan, boolean status_ju, String author, Date updated_at) {
+        this.no_ju = no_ju;
+        this.nama_makul = nama_makul;
+        this.waktu = waktu;
         this.jenis = jenis;
+        this.deskripsi = deskripsi;
+        this.ruangan = ruangan;
+        this.status_ju = status_ju;
+        Author = author;
+        this.updated_at = updated_at;
     }
 
     public int getNo_ju() {
@@ -54,6 +60,14 @@ public class JadwalUjianModel extends RealmObject{
 
     public void setNo_ju(int no_ju) {
         this.no_ju = no_ju;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getNama_makul() {
@@ -72,6 +86,14 @@ public class JadwalUjianModel extends RealmObject{
         this.waktu = waktu;
     }
 
+    public String getJenis() {
+        return jenis;
+    }
+
+    public void setJenis(String jenis) {
+        this.jenis = jenis;
+    }
+
     public String getDeskripsi() {
         return deskripsi;
     }
@@ -88,11 +110,11 @@ public class JadwalUjianModel extends RealmObject{
         this.ruangan = ruangan;
     }
 
-    public int getStatus_ju() {
+    public boolean isStatus_ju() {
         return status_ju;
     }
 
-    public void setStatus_ju(int status_ju) {
+    public void setStatus_ju(boolean status_ju) {
         this.status_ju = status_ju;
     }
 

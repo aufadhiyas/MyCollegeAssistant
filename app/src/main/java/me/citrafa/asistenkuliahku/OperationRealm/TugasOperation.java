@@ -61,6 +61,10 @@ public class TugasOperation {
             public void execute(Realm realm) {
                 TugasModel tm = realm.where(TugasModel.class).equalTo("no_t",No).findFirst();
                 tm.setStatus_t(false);
+                DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",tm.getNo_t()).findFirst();
+                if (dso !=null) {
+                        dso.deleteFromRealm();
+                }
             }
         });
 
