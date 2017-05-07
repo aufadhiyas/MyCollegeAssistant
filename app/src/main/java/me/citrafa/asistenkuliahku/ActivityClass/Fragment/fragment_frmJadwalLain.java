@@ -127,7 +127,7 @@ public class fragment_frmJadwalLain extends Fragment {
         Date created_at=getCurrentTimeStamp();
         Date updated_at=getCurrentTimeStamp();
         String Author="User";
-        if (ids == 10000){
+        if (stat == 0){
             //Insert Data
             jml = new JadwalLainModel(ids,uid,nama,waktuS,waktuF,tempat,deskripsi,status,Author,created_at,updated_at);
             insert(jml);
@@ -141,9 +141,9 @@ public class fragment_frmJadwalLain extends Fragment {
 
     //UNTUK MENENTUKAN ID JADWAL LAIN, JIKA MAU TAMBAH GUNAKAN 10000, JIKA MAU UPDATE TINGGAL PAKE ID JADWAL LAIN DARI RECYCLERVIEW
     public int id(int status){
-        //10000 untuk Menyimpan Data Di Realm
+        //0 untuk Menyimpan Data Di Realm dengan mengambil next id
         //ELSE /Lainnya untuk mengupdate
-        if (status==10000){
+        if (status==0){
             id = JUO.getNextId();
         }else{
             id = status;
