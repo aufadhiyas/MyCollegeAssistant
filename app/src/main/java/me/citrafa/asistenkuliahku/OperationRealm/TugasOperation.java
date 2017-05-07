@@ -3,6 +3,10 @@ package me.citrafa.asistenkuliahku.OperationRealm;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.realm.Realm;
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
@@ -63,6 +67,7 @@ public class TugasOperation {
             @Override
             public void execute(Realm realm) {
                 TugasModel tm = realm.where(TugasModel.class).equalTo("no_t",No).findFirst();
+                tm.setUpdated_at(getCurrentTimeStamp());
                 tm.setStatus_t(false);
                 DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","TugasModel").equalTo("id_model",tm.getNo_t()).findFirst();
                 if (dso !=null) {
@@ -93,5 +98,16 @@ public class TugasOperation {
             nextid = number.intValue()+1;
         }
         return nextid;
+    }
+    public static Date getCurrentTimeStamp(){
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        try {
+            return sdfDate.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return now;
     }
 }

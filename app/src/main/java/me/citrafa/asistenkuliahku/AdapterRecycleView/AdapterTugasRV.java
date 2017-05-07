@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import io.realm.OrderedRealmCollection;
@@ -96,6 +98,10 @@ public class AdapterTugasRV extends RealmRecyclerViewAdapter<TugasModel, Adapter
 
         if (tm.getAttlink_t()!=null){
             holder.imgFile.setVisibility(View.VISIBLE);
+            holder.txt3.setVisibility(View.VISIBLE);
+            String path = tm.getAttlink_t();
+            String filename=path.substring(path.lastIndexOf("/")+1);
+            holder.txt3.setText(filename);
         }
         holder.txt4.setText(tm.getDeskripsi_t());
         holder.imgMore.setOnClickListener(new View.OnClickListener() {
@@ -107,20 +113,26 @@ public class AdapterTugasRV extends RealmRecyclerViewAdapter<TugasModel, Adapter
         holder.imgFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                File myFile = new File(tm.getAttlink_t());
+                try {
+                    FileOpen.openFile(mContext, myFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txt1,txt2,txt4;
+        TextView txt1,txt2,txt3,txt4;
         ImageButton imgFile,imgMore;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             txt1 = (TextView)itemView.findViewById(R.id.rowTugasMakul);
             txt2 = (TextView)itemView.findViewById(R.id.rowTugasWaktu);
+            txt3 = (TextView)itemView.findViewById(R.id.rowTugasFileName);
             txt4 = (TextView)itemView.findViewById(R.id.rowTugasDeskripsi);
             imgFile = (ImageButton)itemView.findViewById(R.id.rowTugasFilebtn);
             imgMore = (ImageButton)itemView.findViewById(R.id.rowTugasMoreBtn);

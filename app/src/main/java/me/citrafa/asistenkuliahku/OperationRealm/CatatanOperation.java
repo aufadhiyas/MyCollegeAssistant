@@ -2,6 +2,10 @@ package me.citrafa.asistenkuliahku.OperationRealm;
 
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import me.citrafa.asistenkuliahku.ModelClass.CatatanModel;
@@ -72,6 +76,7 @@ public class CatatanOperation {
         CatatanModel cm = realm.where(CatatanModel.class).equalTo("no_c",id).findFirst();
         final DateStorageModel dso = realm.where(DateStorageModel.class).equalTo("modelName","CatatanModel").equalTo("id_model",id).findFirst();
         if (cm !=null){
+            cm.setUpdated_at(getCurrentTimeStamp());
             cm.setStatus(false);
             if (cm.getWaktu_c()!=null){
                 if (dso!=null){
@@ -137,5 +142,16 @@ public class CatatanOperation {
             nextid = number.intValue()+1;
         }
         return nextid;
+    }
+    public static Date getCurrentTimeStamp(){
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        try {
+            return sdfDate.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return now;
     }
 }

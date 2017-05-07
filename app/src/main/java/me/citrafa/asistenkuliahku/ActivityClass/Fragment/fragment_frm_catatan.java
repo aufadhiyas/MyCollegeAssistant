@@ -205,7 +205,7 @@ public class fragment_frm_catatan extends Fragment {
         new MaterialFilePicker()
                 .withSupportFragment(fragment_frm_catatan.this)
                 .withRequestCode(FILE_PICKER_REQUEST_CODE)
-                .withHiddenFiles(true)
+                .withHiddenFiles(false)
                 .start();
     }
     @Override

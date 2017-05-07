@@ -1,7 +1,10 @@
 package me.citrafa.asistenkuliahku.AdapterRecycleView;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +26,11 @@ import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
+import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_form_ujian;
+import me.citrafa.asistenkuliahku.ActivityClass.menuJadwalUjian;
+import me.citrafa.asistenkuliahku.ModelClass.JadwalLainModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalUjianModel;
+import me.citrafa.asistenkuliahku.OperationRealm.JadwalUjianOperation;
 import me.citrafa.asistenkuliahku.R;
 
 /**
@@ -34,12 +41,16 @@ public class AdapterJadwalUjianRV extends RealmRecyclerViewAdapter<JadwalUjianMo
     private Context mContext;
     Realm realm;
     private RealmResults<JadwalUjianModel> jadwalUjianModels;
+    menuJadwalUjian mju;
+    JadwalUjianOperation juo;
 
-    public AdapterJadwalUjianRV(@Nullable OrderedRealmCollection<JadwalUjianModel> data,RealmResults<JadwalUjianModel>JUM) {
+    public AdapterJadwalUjianRV(Context context,@Nullable OrderedRealmCollection<JadwalUjianModel> data,RealmResults<JadwalUjianModel>JUM) {
         super(data, true);
         setHasStableIds(true);
         realm = Realm.getDefaultInstance();
         this.jadwalUjianModels = JUM;
+        mju = (menuJadwalUjian)context;
+        juo = new JadwalUjianOperation();
 
     }
 
@@ -76,7 +87,7 @@ public class AdapterJadwalUjianRV extends RealmRecyclerViewAdapter<JadwalUjianMo
             @Override
             public void onClick(View v) {
                 int no = ju.getNo_ju();
-                showPopupMenu(v,position,no);
+                showPopupMenu(v,position,no,ju.getNama_makul());
             }
         });
     }
@@ -98,31 +109,47 @@ public class AdapterJadwalUjianRV extends RealmRecyclerViewAdapter<JadwalUjianMo
             txt5 = (TextView)itemView.findViewById(R.id.rowJUDeskripsi);
         }
     }
-    private void showPopupMenu(View view,int position,int no){
+    private void showPopupMenu(View view,int position,int no,String nama){
 
         PopupMenu popup = new PopupMenu(view.getContext(),view);
         MenuInflater inflate = popup.getMenuInflater();
         inflate.inflate(R.menu.popupmenu_ju, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(position,no));
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(position,no,nama));
         popup.show();
     }
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener{
 
         private int position;
         private int no;
-        public MyMenuItemClickListener(int position,int no){
+        private String nama;
+        public MyMenuItemClickListener(int position,int no,String nama){
             this.position = position;
             this.no = no;
+            this.nama = nama;
         }
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.menuJUubah:
-                    //KIRIM NO KE FRAGMENT fragment_frmJadwalLAin
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("noJU",no);
+                    fragment_form_ujian frm = new fragment_form_ujian();
+                    frm.setArguments(bundle);
+                    mju.getFragmentManager().beginTransaction().replace(R.id.activity_menu_ujian, frm).addToBackStack(null).commit();
                     return true;
                 case R.id.menuJUHapus:
-                    Toast.makeText(mContext, "clicked Hapus = " +no, Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("Hapus jadwal lain?")
+                            .setMessage("Apa kamu yakin ingin menghapus jadwal : "+nama)
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    juo.hapusJadwalUjian(no);
+                                    notifyDataSetChanged();
+                                }
+                            })
+                            .setNegativeButton("Batal",null)
+                            .show();
                     return true;
             }
             return false;

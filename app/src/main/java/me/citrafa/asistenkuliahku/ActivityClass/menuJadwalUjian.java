@@ -33,7 +33,7 @@ public class menuJadwalUjian extends AppCompatActivity{
         realm = Realm.getDefaultInstance();
         RealmResults<JadwalUjianModel> jau = realm.where(JadwalUjianModel.class).findAllSorted("waktu", Sort.ASCENDING);
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerJL);
-        adapter = new AdapterJadwalUjianRV(realm.where(JadwalUjianModel.class).findAll(),jau);
+        adapter = new AdapterJadwalUjianRV(menuJadwalUjian.this,realm.where(JadwalUjianModel.class).findAll(),jau);
         final LinearLayoutManager layout = new LinearLayoutManager(this);
         layout.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layout);
@@ -50,7 +50,11 @@ public class menuJadwalUjian extends AppCompatActivity{
     }
 
     private void changeFragment(){
-        getFragmentManager().beginTransaction().replace(R.id.activity_menu_ujian, new fragment_form_ujian()).addToBackStack(null).commit();
+        Bundle bundle = new Bundle();
+        bundle.putInt("noJU",10000);
+        fragment_form_ujian frm = new fragment_form_ujian();
+        frm.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.activity_menu_ujian, frm).addToBackStack(null).commit();
     }
     public void onStart(){
         super.onStart();

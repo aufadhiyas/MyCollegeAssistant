@@ -2,7 +2,14 @@ package me.citrafa.asistenkuliahku.OperationRealm;
 
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import io.realm.Realm;
+import me.citrafa.asistenkuliahku.Jadwal;
+import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
+import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalUjianModel;
 
 /**
@@ -22,6 +29,8 @@ public class JadwalUjianOperation {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(obj);
+                DateStorageModel ds = new DateStorageModel(getIdDate(),obj.getNo_ju(),"JadwalUjianModel",obj.getWaktu(),null,true);
+                realm.copyToRealm(ds);
             }
         }, new Realm.Transaction.OnSuccess() {
             public void onSuccess() {
@@ -37,9 +46,25 @@ public class JadwalUjianOperation {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
+                realm.copyToRealmOrUpdate(obj);
+                DateStorageModel ds = realm.where(DateStorageModel.class).equalTo("modelName","JadwalUjianModel").equalTo("id_model",obj.getNo_ju()).findFirst();
+                if (ds!=null){
+                    ds.setDateS(obj.getWaktu());
+                }
             }
         });
+    }
+    public void hapusJadwalUjian(final int ind){
+        realm.getDefaultInstance();
+        realm.beginTransaction();
+        JadwalUjianModel ju = realm.where(JadwalUjianModel.class).equalTo("no_ju",ind).findFirst();
+        ju.setStatus_ju(false);
+        ju.setUpdated_at(getCurrentTimeStamp());
+        DateStorageModel ds = realm.where(DateStorageModel.class).equalTo("modelName","JadwalUjianModel").equalTo("id_model",ind).findFirst();
+        if (ds!=null){
+            ds.setStatus(false);
+        }
+        realm.commitTransaction();
     }
 
 
@@ -64,5 +89,27 @@ public class JadwalUjianOperation {
         lastID = number.intValue();
         return lastID;
 
+    }
+    public int getIdDate(){
+        realm = Realm.getDefaultInstance();
+        Number number = realm.where(DateStorageModel.class).max("id");
+        int nextid;
+        if (number ==null){
+            nextid = 1;
+        }else{
+            nextid = number.intValue()+1;
+        }
+        return nextid;
+    }
+    public static Date getCurrentTimeStamp(){
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        try {
+            return sdfDate.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return now;
     }
 }

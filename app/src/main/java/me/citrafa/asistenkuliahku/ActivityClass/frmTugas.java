@@ -1,5 +1,6 @@
 package me.citrafa.asistenkuliahku.ActivityClass;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -17,6 +18,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,6 +28,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import io.realm.Realm;
+import me.citrafa.asistenkuliahku.ActivityClass.Fragment.fragment_Tugas;
 import me.citrafa.asistenkuliahku.CustomWidget.LibraryDateCustom;
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
@@ -35,7 +40,8 @@ import me.citrafa.asistenkuliahku.R;
 import me.citrafa.asistenkuliahku.SessionManager.SessionManager;
 
 public class frmTugas extends AppCompatActivity {
-    private  static final String TAG = frmDaftar.class.getSimpleName();
+    private  static final String TAG = "LOG";
+    public static final int FILE_PICKER_REQUEST_CODE = 1;
     TugasModel tugasModel;
     JadwalKuliahModel jadwalKuliahModel;
     Realm realm;
@@ -131,6 +137,12 @@ public class frmTugas extends AppCompatActivity {
                 DateTimePicker();
             }
         });
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFilePicker();
+            }
+        });
 
 
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +172,23 @@ public class frmTugas extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            if (path != null) {
+                lbl3.setText(path);
+            }
+        }
+    }
+    private void openFilePicker() {
+        new MaterialFilePicker()
+                .withActivity(frmTugas.this)
+                .withRequestCode(FILE_PICKER_REQUEST_CODE)
+                .withHiddenFiles(false).withTitle("Lampirkan File")
+                .start();
     }
 
 

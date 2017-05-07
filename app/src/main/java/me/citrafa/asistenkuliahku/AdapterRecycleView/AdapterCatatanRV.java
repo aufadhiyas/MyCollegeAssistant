@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import butterknife.InjectView;
@@ -74,9 +76,6 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
             holder.txt2.setVisibility(View.VISIBLE);
         }
         holder.txt3.setText(catatanModel.getDeskripsi_c());
-        if (catatanModel.getAttlink_c() !=null){
-            holder.btnFile.setVisibility(View.VISIBLE);
-        }
         final int id = catatanModel.getNo_c();
         holder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +83,33 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
                 showPopupMenu(holder.btnMore,position,id,catatanModel.getNama_c());
             }
         });
+        if (catatanModel.getAttlink_c()!=null){
+            holder.btnFile.setVisibility(View.VISIBLE);
+            holder.txt4.setVisibility(View.VISIBLE);
+            String path = catatanModel.getAttlink_c();
+            String filename=path.substring(path.lastIndexOf("/")+1);
+            holder.txt4.setText(filename);
+        }
+        holder.btnFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File myFile = new File(catatanModel.getAttlink_c());
+                try {
+                    FileOpen.openFile(mContext, myFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 
 
+
+
     public class myViewHolder extends RecyclerView.ViewHolder {
-        TextView txt1,txt2,txt3;
+        TextView txt1,txt2,txt3,txt4;
         ImageButton btnMore,btnFile;
 
 
@@ -97,7 +117,8 @@ public class AdapterCatatanRV extends RealmRecyclerViewAdapter<CatatanModel, Ada
             super(itemView);
             txt1 = (TextView)itemView.findViewById(R.id.rowCatatanNama);
             txt2 = (TextView)itemView.findViewById(R.id.rowCatatanWaktu);
-            txt3= (TextView)itemView.findViewById(R.id.rowCatatanDeskripsi);
+            txt3 = (TextView)itemView.findViewById(R.id.rowCatatanDeskripsi);
+            txt4 = (TextView)itemView.findViewById(R.id.rowCatatanNamaFile);
             btnMore = (ImageButton)itemView.findViewById(R.id.rowCatatanBtnMore);
             btnFile = (ImageButton)itemView.findViewById(R.id.rowCatatanBtn);
         }
