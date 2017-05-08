@@ -66,6 +66,8 @@ public class frmLogin extends AppCompatActivity {
         lupa.setMovementMethod(LinkMovementMethod.getInstance());
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
+        Intent intent = new Intent(this,MyService.class);
+        startService(intent);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);

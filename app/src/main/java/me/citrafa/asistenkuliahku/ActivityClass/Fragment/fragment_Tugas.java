@@ -101,7 +101,6 @@ public class fragment_Tugas extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.getRecycledViewPool().clear();
         adapter.notifyDataSetChanged();
-        Toast.makeText(getActivity(), ""+jkm.size(), Toast.LENGTH_SHORT).show();
 
         return rootView;
 

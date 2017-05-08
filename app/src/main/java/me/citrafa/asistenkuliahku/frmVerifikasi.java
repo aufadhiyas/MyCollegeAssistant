@@ -36,7 +36,7 @@ public class frmVerifikasi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_verifikasi);
-
+        session = new SessionManager(frmVerifikasi.this);
         Intent intent = getIntent();
         emails = intent.getStringExtra("email");
         namas = intent.getStringExtra("nama");

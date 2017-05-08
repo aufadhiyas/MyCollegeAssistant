@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/AppTheme.NoActionBar"
+    tools:context="me.citrafa.asistenkuliahku.SplashScreen">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/primary"
+        android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/splashIcon"
+        android:src="@mipmap/iconapp"/>
+        <me.citrafa.asistenkuliahku.CustomWidget.TVLatoFontMedium
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/splashlbl1"
+            android:textColor="@color/nullBackground"
+            android:layout_below="@id/splashIcon"
+            android:text="My College Assistant"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -40,12 +40,14 @@ import github.vatsal.easyweather.retrofit.models.Weather;
 import github.vatsal.easyweather.retrofit.models.WeatherResponseModel;
 import io.realm.Realm;
 
+import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 import me.citrafa.asistenkuliahku.MyService;
 import me.citrafa.asistenkuliahku.R;
 import me.citrafa.asistenkuliahku.Service.BoundService;
 import me.citrafa.asistenkuliahku.Service.GPSTracker;
 import me.citrafa.asistenkuliahku.SessionManager.SessionManager;
+import me.citrafa.asistenkuliahku.SettingActivity;
 
 import static java.lang.String.valueOf;
 import static me.citrafa.asistenkuliahku.BuildConfig.OWM_API_KEY;
@@ -206,7 +208,7 @@ public class Dashboard extends AppCompatActivity
         } else if (id == R.id.btnmenuCatatan) {
             startActivity(new Intent(Dashboard.this, menuCatatan.class));
         }else if (id==R.id.btnMenuSetting){
-            
+            startActivity(new Intent(Dashboard.this, SettingActivity.class));
         }
         else if (id == R.id.btnMenuTentang) {
 
@@ -246,7 +248,7 @@ public class Dashboard extends AppCompatActivity
     };
     private void getCountDown(final TextView txt1, final TextView txt2){
         realm = Realm.getDefaultInstance();
-        int noHari = 5;
+        int noHari = 1;
         final int year0 = 2011;
         final int month0 = 1;
         final int day0 = 1;
@@ -258,6 +260,8 @@ public class Dashboard extends AppCompatActivity
         String formatedDate = sdf.format(new Date(year0,month0,day0,jam,minutes));
         try {
             Date dateMowForJK = sdf.parse(formatedDate);
+            Date nows = new Date();
+            final DateStorageModel dso = realm.where(DateStorageModel.class).greaterThan("dateS",nows).findFirst();
             final JadwalKuliahModel jkm = realm.where(JadwalKuliahModel.class).equalTo("nohari",noHari).greaterThan("waktu_jk",dateMowForJK).findFirst();
             Log.d(TAG,"waktu : CEK ");
             if (jkm != null) {
