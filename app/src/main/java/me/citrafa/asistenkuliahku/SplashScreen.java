@@ -45,6 +45,8 @@ public class SplashScreen extends AppCompatActivity {
                 }else{
                     Intent i = new Intent(SplashScreen.this, Dashboard.class);
                     startActivity(i);
+                    // close this activity
+                    finish();
                 }
             }
         }, SPLASH_TIME_OUT);
