@@ -1,12 +1,10 @@
 package me.citrafa.asistenkuliahku.ActivityClass;
 
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
@@ -23,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +28,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import github.vatsal.easyweather.Helper.TempUnitConverter;
 import github.vatsal.easyweather.Helper.WeatherCallback;
@@ -42,12 +38,11 @@ import io.realm.Realm;
 
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
-import me.citrafa.asistenkuliahku.MyService;
 import me.citrafa.asistenkuliahku.R;
 import me.citrafa.asistenkuliahku.Service.BoundService;
 import me.citrafa.asistenkuliahku.Service.GPSTracker;
 import me.citrafa.asistenkuliahku.SessionManager.SessionManager;
-import me.citrafa.asistenkuliahku.SettingActivity;
+import me.citrafa.asistenkuliahku.SettingsActivity;
 
 import static java.lang.String.valueOf;
 import static me.citrafa.asistenkuliahku.BuildConfig.OWM_API_KEY;
@@ -208,7 +203,7 @@ public class Dashboard extends AppCompatActivity
         } else if (id == R.id.btnmenuCatatan) {
             startActivity(new Intent(Dashboard.this, menuCatatan.class));
         }else if (id==R.id.btnMenuSetting){
-            startActivity(new Intent(Dashboard.this, SettingActivity.class));
+            startActivity(new Intent(Dashboard.this, SettingsActivity.class));
         }
         else if (id == R.id.btnMenuTentang) {
 
@@ -248,7 +243,7 @@ public class Dashboard extends AppCompatActivity
     };
     private void getCountDown(final TextView txt1, final TextView txt2){
         realm = Realm.getDefaultInstance();
-        int noHari = 1;
+        int noHari = 2;
         final int year0 = 2011;
         final int month0 = 1;
         final int day0 = 1;

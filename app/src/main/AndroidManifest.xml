@@ -21,8 +21,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ActivityClass.frmLogin"
-            android:label="Login">
-        </activity>
+            android:label="Login" />
         <activity
             android:name=".ActivityClass.frmDaftar"
             android:label="Daftar Akun" />
@@ -57,21 +56,26 @@
         <activity android:name=".ActivityClass.MenuPersonalInfo" />
 
         <service
-            android:name=".MyService"
+            android:name=".LocalService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".SettingActivity"
-            android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashScreen"
+            android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ActivityClass.Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="me.citrafa.asistenkuliahku.ActivityClass.Dashboard" />
         </activity>
     </application>
 

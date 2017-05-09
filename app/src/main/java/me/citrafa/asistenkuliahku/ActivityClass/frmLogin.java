@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.citrafa.asistenkuliahku.MyService;
+import me.citrafa.asistenkuliahku.LocalService;
 import me.citrafa.asistenkuliahku.R;
 import me.citrafa.asistenkuliahku.Service.GPSTracker;
 import me.citrafa.asistenkuliahku.SessionManager.AppController;
@@ -66,7 +64,7 @@ public class frmLogin extends AppCompatActivity {
         lupa.setMovementMethod(LinkMovementMethod.getInstance());
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        Intent intent = new Intent(this,MyService.class);
+        Intent intent = new Intent(this,LocalService.class);
         startService(intent);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

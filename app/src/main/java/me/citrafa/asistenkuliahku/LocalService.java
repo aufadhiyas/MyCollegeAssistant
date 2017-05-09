@@ -14,26 +14,22 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.provider.Settings;
-import android.support.annotation.IntDef;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import me.citrafa.asistenkuliahku.ModelClass.DateStorageModel;
 import me.citrafa.asistenkuliahku.ModelClass.JadwalKuliahModel;
 import me.citrafa.asistenkuliahku.Service.MyBroadcastReceiver;
 
-public class MyService extends Service {
+public class LocalService extends Service {
 
     public final IBinder iBinder = new MyBinder();
     LocalBroadcastManager broadcastManager;
@@ -56,7 +52,7 @@ public class MyService extends Service {
 
 
 
-    public MyService() {
+    public LocalService() {
 
     }
 
@@ -249,8 +245,8 @@ public class MyService extends Service {
         }
     }
     public class MyBinder extends Binder{
-        public MyService getService(){
-            return MyService.this;
+        public LocalService getService(){
+            return LocalService.this;
         }
     }
 
