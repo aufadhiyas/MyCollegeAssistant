@@ -8,7 +8,7 @@ import retrofit2.http.POST;
  * Created by SENSODYNE on 01/05/2017.
  */
 
-public interface AsistenKuliahAPI {
+public interface ClientServiceAPI {
     @POST("upload/all")
     Call<ResponseBody> KirimSemua();
 
